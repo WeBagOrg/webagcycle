@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.hotent.demo.model.demopackage.Ypxxdemo">
+	<resultMap id="Ypxxdemo" type="com.hotent.demo.model.demopackage.Ypxxdemo">
+		<id property="id" column="ID" jdbcType="NUMERIC"/>
+		<result property="ypbh" column="F_YPBH" jdbcType="VARCHAR"/>
+		<result property="ypmc" column="F_YPMC" jdbcType="VARCHAR"/>
+		<result property="cyr" column="F_CYR" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+
+	<sql id="columns">
+		ID,F_YPBH,F_YPMC,F_CYR
+	</sql>
+	<sql id="wfColumns">
+		ID,F_YPBH,F_YPMC,F_CYR
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(ypbh)"> AND F_YPBH  LIKE '%${ypbh}%'  </if>
+			<if test="@Ognl@isNotEmpty(ypmc)"> AND F_YPMC  LIKE '%${ypmc}%'  </if>
+			<if test="@Ognl@isNotEmpty(cyr)"> AND F_CYR  LIKE '%${cyr}%'  </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="com.hotent.demo.model.demopackage.Ypxxdemo">
+		INSERT INTO W_YPXXDEMO
+		(ID,
+		F_YPBH,F_YPMC,F_CYR)
+		VALUES
+		(#{id,jdbcType=NUMERIC},
+		#{ypbh,jdbcType=VARCHAR}, #{ypmc,jdbcType=VARCHAR}, #{cyr,jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM W_YPXXDEMO 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<update id="update" parameterType="com.hotent.demo.model.demopackage.Ypxxdemo">
+		UPDATE W_YPXXDEMO SET
+		F_YPBH=#{ypbh,jdbcType=VARCHAR},
+		F_YPMC=#{ypmc,jdbcType=VARCHAR},
+		F_CYR=#{cyr,jdbcType=VARCHAR}
+		WHERE
+		ID=#{id}
+	</update>
+	
+		    
+	<select id="getById" parameterType="java.lang.Long" resultMap="Ypxxdemo">
+		SELECT <include refid="columns"/>
+		FROM W_YPXXDEMO
+		WHERE
+		ID=#{id}
+	</select>
+	
+	<select id="getAll" resultMap="Ypxxdemo">
+		SELECT <include refid="columns"/>
+		FROM W_YPXXDEMO   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by ID  desc
+		</if>
+	</select>
+	
+	
+	
+</mapper>

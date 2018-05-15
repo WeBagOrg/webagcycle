@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fileTypes>
+	<fileType id="0" pId="-1" name="文件管理" isFolder="1" isDisplayInMenu="1" isOpen="1" alias="wjgl" isParent="true" isRoot="1"/>
+	<fileType id="1" pId="0" name="技术交底书" isFolder="1" isDisplayInMenu="1" isOpen="1" alias="jsjds" isParent="true"/>
+	<fileType id="2" pId="0" name="参考文献" isFolder="1" isDisplayInMenu="1" isOpen="1" alias="ckwx" isParent="true"/>
+	<fileType id="3" pId="0" name="查新报告" isFolder="1" isDisplayInMenu="1" isOpen="1" alias="cxbg" isParent="true"/>
+	<fileType id="4" pId="0" name="检索报告" isFolder="1" isDisplayInMenu="1" isOpen="1" alias="jsbg" isParent="true"/>
+	<fileType id="5" pId="0" name="申请文件" isFolder="1" isDisplayInMenu="1" isOpen="1" alias="sqwj" isParent="true"/>
+	<fileType id="6" pId="0" name="中间文件" isFolder="1" isDisplayInMenu="1" isOpen="1" alias="zjwj" isParent="true"/>
+	<fileType id="7" pId="0" name="通知书文件" isFolder="1" isDisplayInMenu="1" isOpen="1" alias="tzswj" isParent="true"/>
+	<fileType id="8" pId="0" name="答复意见" isFolder="1" isDisplayInMenu="1" isOpen="1" alias="dfyj" isParent="true"/>
+	<fileType id="9" pId="0" name="其他文件" isFolder="1" isDisplayInMenu="1" isOpen="1" alias="qtwj" isParent="true"/>
+	<fileType id="10" pId="0" name="专利证书" isFolder="1" isDisplayInMenu="1" isOpen="1" alias="zlzs" isParent="true"/>
+</fileTypes>

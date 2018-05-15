@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.hotent.platform.model.ip.Search">
+	<resultMap type="com.hotent.platform.model.ip.Search" id="all">
+		<id property="id" column="ID" jdbcType="NUMERIC"/>		
+		<result property="appNumber" column="APPNUMBER" jdbcType="VARCHAR"/>		
+		<result property="title" column="TITLE" jdbcType="VARCHAR"/>	
+		<result property="appDate" column="APPDATE" jdbcType="DATE"/>
+		<result property="authNumber" column="AUTHNUMBER" jdbcType="VARCHAR"/>	
+		<result property="authDate" column="AUTHDATE" jdbcType="DATE"/>
+		<result property="patType" column="PATTYPE" jdbcType="VARCHAR"/>
+		<result property="flag" column="FLAG" jdbcType="VARCHAR"/>
+		<result property="inventor" column="INVENTORNAME_CN" jdbcType="VARCHAR"/>
+		<result property="product" column="PRODUCTNAME" jdbcType="VARCHAR"/>
+		<result property="project" column="ITEMNAME" jdbcType="VARCHAR"/>
+		
+		
+<!--	<association property="product" resultMap="com.hotent.platform.model.ip.IpProduct.product"></association>
+	<association property="project" resultMap="com.hotent.platform.model.ip.IpItem.project"></association>
+ 	<association property="inventor" resultMap="com.hotent.platform.model.ip.IpInventor.result"></association>
+ -->	</resultMap>
+
+	<sql id="dynamicWhere">	
+		<if test="@Ognl@isNotEmpty(patentSearch)">
+			AND ( APPNUMBER LIKE CONCAT('%',#{patentSearch},'%')			
+				OR AUTHNUMBER LIKE  CONCAT('%',#{patentSearch},'%')
+				OR TITLE LIKE  CONCAT('%',#{patentSearch},'%')
+				OR INVENTORNAME_CN LIKE CONCAT('%',#{patentSearch},'%')
+		     	OR PRODUCTNAME LIKE CONCAT('%',#{patentSearch},'%')
+				OR ITEMNAME LIKE CONCAT('%',#{patentSearch},'%')
+				)
+		</if>
+		<if test="@Ognl@isStringArray(patType)">
+			AND PATTYPE IN
+			<foreach collection="patType" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="@Ognl@isStringValue(patType)"> AND PATTYPE = #{patType}</if>
+		<if test="@Ognl@isNotEmpty(beginapplydate)"> AND APPDATE >=#{beginapplydate}</if>
+		<if test="@Ognl@isNotEmpty(endapplydate)"> AND APPDATE &lt;=#{endapplydate}</if>		
+		<if test="@Ognl@isNotEmpty(beginauthorizedate)"> AND AUTHDATE >=#{beginauthorizedate}</if>
+		<if test="@Ognl@isNotEmpty(endauthorizedate)"> AND AUTHDATE &lt;=#{endauthorizedate}</if>
+		
+	</sql>
+
+
+	
+	<select id="getInfo"  resultMap="all">
+	<!-- 有授权，则取授权数据 -->
+	
+	    SELECT  ID,APPNUMBER,APPDATE,AUTHNUMBER,AUTHDATE,PATTYPE,TITLE,INVENTORNAME_CN,ITEMNAME,PRODUCTNAME,FLAG
+FROM (
+		SELECT ID_PAT ID,PATENT.APPNUMBER,APPDATE,AUTHNUMBER,AUTHDATE,PATTYPE,TITLE,group_concat(DISTINCT INVENTORNAME_CN) INVENTORNAME_CN,ITEMNO,group_concat(DISTINCT ITEMNAME) ITEMNAME,group_concat(DISTINCT PRODUCTNAME) PRODUCTNAME,'1' FLAG
+		FROM IP_PATENT PATENT   
+	    LEFT JOIN IP_PATENT_APPLY_INVENTOR INVENTOR ON INVENTOR.PATID=PATENT.ID_PAT
+	    LEFT JOIN IP_MID_PATENT_PROJECT MIDPROJECT ON PATENT.ID_PAT=MIDPROJECT.REFID
+		LEFT JOIN IP_PROJECT PROJECT ON MIDPROJECT.PROJECTID=PROJECT.ID
+		LEFT JOIN IP_MID_PATENT_PRODUCT MIDPRODUCT ON PATENT.ID_PAT=MIDPRODUCT.REFID
+		LEFT JOIN IP_PRODUCT PRODUCT ON MIDPRODUCT.PRODUCTID=PRODUCT.ID
+		
+	    GROUP BY ID_PAT	   
+		
+		UNION		
+		SELECT ID_APP ID, PATENT.APPNUMBER,APPDATE,AUTHNUMBER,AUTHDATE,PATTYPE,TITLE,group_concat(DISTINCT INVENTORNAME_CN) INVENTORNAME_CN,ITEMNO,group_concat(DISTINCT ITEMNAME) ITEMNAME,group_concat(DISTINCT PRODUCTNAME) PRODUCTNAME,'2' FLAG
+		FROM IP_PATENT_APPLY PATENT   
+	    LEFT JOIN IP_PATENT_APPLY_INVENTOR INVENTOR ON INVENTOR.APPID=PATENT.ID_APP
+	    LEFT JOIN IP_MID_PATENT_PROJECT MIDPROJECT ON PATENT.ID_APP=MIDPROJECT.REFID
+		LEFT JOIN IP_PROJECT PROJECT ON MIDPROJECT.PROJECTID=PROJECT.ID
+		LEFT JOIN IP_MID_PATENT_PRODUCT MIDPRODUCT ON PATENT.ID_APP=MIDPRODUCT.REFID
+		LEFT JOIN IP_PRODUCT PRODUCT ON MIDPRODUCT.PRODUCTID=PRODUCT.ID
+		WHERE
+		PATENT.APPNUMBER  NOT IN(SELECT APPNUMBER FROM IP_PATENT)
+	    GROUP BY ID_APP		   
+		)A
+		<where>			
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(ids)"> 
+		AND ID IN
+		 <foreach collection="ids" item="item" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+		</if>
+		</where>
+		
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by ID  desc
+		</if>
+	</select>
+	
+	
+</mapper>

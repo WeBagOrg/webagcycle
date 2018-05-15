@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.hotent.platform.model.ip.Competitor">
+	<resultMap id="Competitor" type="com.hotent.platform.model.ip.Competitor">
+		<id property="idPat" column="ID_PAT" jdbcType="NUMERIC"/>
+		<result property="title" column="TITLE" jdbcType="VARCHAR"/>
+		<result property="appnumber" column="APPNUMBER" jdbcType="VARCHAR"/>	
+		<result property="appdate" column="APPDATE" jdbcType="DATE"/>
+		<result property="authnumber" column="AUTHNUMBER" jdbcType="VARCHAR"/>
+		<result property="authdate" column="AUTHDATE" jdbcType="DATE"/>
+		<result property="mainipc" column="MAINIPC" jdbcType="VARCHAR"/>
+		<result property="lprs" column="LPRS" jdbcType="VARCHAR"/>
+		<result property="pattype" column="PATTYPE" jdbcType="VARCHAR"/>
+		<result property="appcoun" column="APPCOUN" jdbcType="VARCHAR"/>
+		<result property="apporg" column="APPORG" jdbcType="VARCHAR"/>
+		<result property="patstatus" column="PATSTATUS" jdbcType="VARCHAR"/>
+		
+	</resultMap>
+	
+	
+
+	<sql id="columns">
+			ID_PAT,TITLE,APPNUMBER,APPDATE,AUTHNUMBER,AUTHDATE,MAINIPC,LPRS,PATTYPE,APPCOUN,APPORG,PATSTATUS
+	
+	</sql>
+	
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(patentSearch)">
+			AND ( APPNUMBER LIKE CONCAT('%',#{patentSearch},'%')				
+				OR AUTHNUMBER LIKE  CONCAT('%',#{patentSearch},'%')
+				OR TITLE LIKE  CONCAT('%',#{patentSearch},'%')				
+				OR APPORG LIKE CONCAT('%',#{patentSearch},'%')
+				)
+		   </if>
+		   
+		   <if test="@Ognl@isStringArray(patType)">
+			AND PATTYPE IN
+			<foreach collection="patType" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="@Ognl@isStringValue(patType)"> AND PATTYPE = #{patType}</if>
+		<!-- <if test="@Ognl@isStringArray(patStatus)">
+			AND PATSTATUS IN
+			<foreach collection="patStatus" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if> -->
+		<if test="@Ognl@isStringValue(patStatus)"> 
+		<if test="patStatus=='10'">
+		AND PATSTATUS = #{patStatus}</if></if>
+		<if test="patStatus=='20'">AND PATSTATUS  !='10'</if>
+		
+		</where>
+	</sql>
+
+	
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM ip_patent_competitor 
+		WHERE
+		ID_PAT=#{idPat}
+	</delete>
+	
+	
+		    
+	<select id="getById" parameterType="java.lang.Long" resultMap="Competitor">
+		SELECT <include refid="columns"/>
+		FROM ip_patent_competitor
+		WHERE
+		ID_PAT=#{idPat}
+	</select>
+	
+	<select id="getAll" resultMap="Competitor">
+		SELECT <include refid="columns"/>
+		FROM ip_patent_competitor   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by ID_PAT  desc
+		</if>
+	</select>
+	
+	<select id="getAllAppNumber" resultType="String">
+		SELECT  APPNUMBER FROM ip_patent_competitor
+	</select>
+	
+	<insert id="insertPatentFromPatentInterface">
+		INSERT INTO ip_patent_competitor
+		(ID_PAT,TITLE,APPNUMBER,APPDATE,AUTHNUMBER,AUTHDATE,MAINIPC,PATTYPE,APPCOUN,APPORG,PATSTATUS)
+		VALUES
+		(#{idPat,jdbcType=NUMERIC},#{title,jdbcType=VARCHAR},#{appnumber,jdbcType=VARCHAR},#{appdate,jdbcType=DATE},#{authnumber,jdbcType=VARCHAR}
+		,#{authdate,jdbcType=DATE},#{mainipc,jdbcType=VARCHAR},#{pattype,jdbcType=VARCHAR},#{appcoun,jdbcType=VARCHAR}
+		,#{apporg,jdbcType=VARCHAR},#{patstatus,jdbcType=VARCHAR})
+	</insert>
+</mapper>
