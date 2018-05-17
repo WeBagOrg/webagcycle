@@ -62,10 +62,10 @@
 		<file refTemplate="myEndList" filename="{classVar}GetMyEnd.jsp" dir="WebRoot\WEB-INF\view\{system}\{package}" override="true"/>
 	 -->	
 	</files>
-	<table tableName="ip_patent_competitor" >
+	<!-- <table tableName="ip_patent_competitor" >
 		<variable name="class" value="Competitor" />
 		<variable name="package" value="ip" />		
-	</table>
+	</table> -->
 	<!--
 	
 	 
