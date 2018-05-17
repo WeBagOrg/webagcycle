@@ -3,7 +3,7 @@
         <wb-resource deploy-path="/" source-path="/WebRoot" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/resources"/>
-        <property name="context-root" value="eip"/>
-        <property name="java-output-path" value="/eip/web/WEB-INF/classes"/>
+        <property name="context-root" value="webag"/>
+        <property name="java-output-path" value="/webag/web/WEB-INF/classes"/>
     </wb-module>
 </project-modules>
