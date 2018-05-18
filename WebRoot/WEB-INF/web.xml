@@ -214,15 +214,15 @@
 		<servlet-class>com.hotent.core.web.servlet.ValidJs</servlet-class>
 	</servlet>
 	
-	<servlet>
-		<servlet-name>weixin</servlet-name>
-		<servlet-class>com.hotent.platform.weixin.WeixinServlet</servlet-class>
-	</servlet>
+	<!--<servlet>-->
+		<!--<servlet-name>weixin</servlet-name>-->
+		<!--<servlet-class>com.hotent.platform.weixin.WeixinServlet</servlet-class>-->
+	<!--</servlet>-->
 	
-	<servlet-mapping>
-		<servlet-name>weixin</servlet-name>
-		<url-pattern>/wx</url-pattern>
-	</servlet-mapping>
+	<!--<servlet-mapping>-->
+		<!--<servlet-name>weixin</servlet-name>-->
+		<!--<url-pattern>/wx</url-pattern>-->
+	<!--</servlet-mapping>-->
 	<!-- 
 	<servlet>
 		<servlet-name>auth</servlet-name>

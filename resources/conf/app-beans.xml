@@ -18,9 +18,6 @@
 	<!-- ipph add 2015-10-16 -->
 	 <!-- QueryUtil类 -->
      <bean id="ipQueryUtil" class="com.hotent.platform.ip.util.IpQueryUtil"/>
-     <!-- 专利接口 -->
-     <bean id="patentInterfaceHttpClient" class="com.hotent.platform.ip.util.PatentInterfaceHttpClient" />
-     <bean id="newPatentInterfaceHttpClient" class="com.hotent.platform.ip.util.NewPatentInterfaceHttpClient" />
      <!-- ipph add 2015-10-16 end-->
 	
 	<!-- 缓存操作类，如果需要修改缓存的实现，修改实现的class就可以了，id不要修改。 -->
