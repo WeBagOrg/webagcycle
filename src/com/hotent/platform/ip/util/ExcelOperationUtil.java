@@ -40,14 +40,10 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.hotent.core.util.DateFormatUtil;
-import com.hotent.platform.model.ip.PatentExcelModel;
-import com.hotent.platform.model.ip.Search;
 
 
-/**
- * @author ipph
- *	石建强 2014/09/19
- */
+
+
 public class ExcelOperationUtil {
 	/**
 	 * 导入Excel
