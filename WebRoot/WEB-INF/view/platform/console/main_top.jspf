@@ -167,7 +167,7 @@
 		<img id="logoImg" src="${ctx}${currentSystem.logo}" />
 	</div> --%>
 	<div class="left_logo" style="left:0px;top:0px;">
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:hometab();"><img id="logoImg" src="${ctx}/commons/image/logo2.png" /></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:hometab();"><img id="logoImg" src="${ctx}/styles/webagcycle/img/logo2.png" width="260px" height="80px"/></a>
 	</div>
 	<div class="search_welcome">
 		<div class="welcome_panel" >

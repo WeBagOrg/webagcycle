@@ -3,11 +3,6 @@
 <%@page import="org.springframework.security.authentication.AccountExpiredException"%>
 <%@page import="org.springframework.security.authentication.DisabledException"%>
 <%@page import="org.springframework.security.authentication.LockedException"%>
-<%@page import="com.hotent.core.api.util.PropertyUtil"%>
-<%@page import="org.springframework.security.authentication.AuthenticationServiceException"%>
-<%@page import="org.springframework.security.authentication.AccountExpiredException"%>
-<%@page import="org.springframework.security.authentication.DisabledException"%>
-<%@page import="org.springframework.security.authentication.LockedException"%>
 <%@page import="org.springframework.security.authentication.BadCredentialsException"%>
 <%@page import="java.util.Enumeration"%>
 <%@ page pageEncoding="UTF-8" %>
@@ -19,14 +14,14 @@
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	
 <head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>企业管理平台</title>
-		<script type="text/javascript" src="${ctx}/js/jquery/jquery.js"></script>
-		<link rel="stylesheet" href="${ctx}/styles/webagcycle/reset.css" />
-		<link rel="stylesheet" href="${ctx}/styles/webagcycle/common.css" />
-		<script type="text/javascript">
+    <title><%=appName %></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script type="text/javascript" src="${ctx}/js/jquery/jquery.js"></script>
+	<link rel="stylesheet" type="text/css" href="${ctx}/styles/login/login.css"></link>
+	<link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon"/>
+	
+	<script type="text/javascript">
 		if(top!=this){//当这个窗口出现在iframe里，表示其目前已经timeout，需要把外面的框架窗口也重定向登录页面
 			  top.location='${ctx}/login.jsp';
 		}
@@ -72,34 +67,49 @@
 			        mylabel.innerHTML = "√";
 			 }		
 </script>
-	</head>
-	<body>
-		<div class="wrap login_wrap">
-			<div class="content">
-				<div class="logo"></div>
-				<div class="login_box">
-					<div class="login_form">
-						<div class="login_title">
-							企业管理平台
+</head>
+<body>
+<div class="form_background">
+<form id="form-login" action="${ctx}/login.ht" method="post">
+	<span id="officeSpan" style="color:red" width="100%";height="50px"></span>
+	<center>
+		<div class="main_login">
+			<span class="bpmlogo_login"></span>
+			<div class="content_login">
+			<div class="column">
+			<!-- <span class="logo"> -->
+			<span><img id="logoImg" src="${ctx}/commons/image/logo2.png" />			
+			</span>&nbsp;&nbsp;&nbsp;<font style="font-size:12pt ;font-weight:bold">知识产权管理平台</font>
+			</div>	
+				<div class="column">
+					<span style="font-size:15px;">用户名&nbsp;:</span>
+			        <input class="username" type="text" name="username" class="login" /><br>	
+				</div>	
+				<div class="column">
+					<span style="font-size:15px;">密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;:</span>
+					<input class="password" type="password" name="password"/>
+				</div>	
+				<c:if test="${sessionScope.validCodeEnabled=='true'}">
+					<div class="vcode column">
+					 	<div>
+							<span>验证码:</span><br>
+						
+							<input type="text" name="validCode"  />
 						</div>
-						<form id="form-login" action="${ctx}/login.ht" method="post">
-							<div class="form_text_ipt">
-								<input name="username" type="text" placeholder="员工编号">
-							</div>
-							<div class="ececk_warning"><span>员工编号不能为空</span></div>
-							<div class="form_text_ipt">
-								<input name="password" type="password" placeholder="密码">
-							</div>
-							<div class="ececk_warning"><span>密码不能为空</span></div>
-							<div class="form_check_ipt">
-								<div class="left check_left">
-									<label><input name="" type="checkbox"> 记住密码</label>
-								</div>
-							</div>
-							<div class="form_btn">
-								<button type="button"  class="left" onclick="document.getElementById('form-login').submit();">登录</button>
-							</div>
-							<%
+						<div class="vcode_img">
+							<img id="validImg" src="${ctx}/servlet/ValidCode" /><br>
+							<input type="hidden" name="validCodeEnabled" value="true"/>
+							<a onclick="reload()">看不清，换一张</a>
+						</div>
+					</div>
+				</c:if>
+				<div class="confirm">
+					<input id="checkbox" type="checkbox" name="_spring_security_remember_me" value="1"/>
+					<span><img src="styles/login/images/5c5d5f.png" alt="" /></span>
+					<a class="reset_btn btn r" onclick="document.getElementById('form-login').reset();">重置</a>
+					<a class="login_btn btn r" onclick="document.getElementById('form-login').submit();">登录</a>
+				</div>
+				<%
 				Object loginError=(Object)request.getSession().getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
 				
 				if(loginError!=null ){
@@ -121,16 +131,11 @@
 				request.getSession().removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);//删除登录失败信息
 				}
 				%>
-						</form>
-					</div>
-				</div>
 			</div>
-			
 		</div>
-		<script type="text/javascript" src="js/jquery.min.js" ></script>
-		<script type="text/javascript" src="js/common.js" ></script>
-		<div style="text-align:center;">
-		
+	</center>
+	
+</form>
 </div>
-	</body>
+</body>
 </html>
