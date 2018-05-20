@@ -27,7 +27,7 @@
 				<value>classpath:resource/form</value>
 				<value>classpath:resource/message</value>
 				<value>classpath:resource/mobile</value>
-				<value>classpath:resource/ip</value>
+				<!--<value>classpath:resource/ip</value>-->
 				<value>classpath:resource/errors</value>
 			</list>
         </property>

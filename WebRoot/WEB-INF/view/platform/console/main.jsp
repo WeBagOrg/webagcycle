@@ -17,8 +17,8 @@
 	String appName=PropertyUtil.getByAlias("appName");
 %>
 <head>
-    <title><%=appName%></title>
-    <link rel="shortcut icon" href="${ctx}/favicon.ico" type="image/x-icon" />
+    <title>企业管理平台</title>
+   <%-- <link rel="shortcut icon" href="${ctx}/favicon.ico" type="image/x-icon" />--%>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<f:link href="Aqua/css/ligerui-all.css"></f:link>
 	<f:link href="index.css"></f:link>
