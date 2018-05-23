@@ -179,7 +179,7 @@ public class SysCodegenController extends BaseController {
 //				//其他参数
 //				model.put("table", table);
 //				model.put("system", system);
-//				if (StringUtil.isNotEmpty(flowKey)) {
+//				if (PayUtil.isNotEmpty(flowKey)) {
 //					model.put("flowKey", flowKey);
 //				}
 //				
@@ -187,9 +187,9 @@ public class SysCodegenController extends BaseController {
 //				FreemarkEngine freemarkEngine = new FreemarkEngine();
 //				String html = freemarkEngine.parseByStringTemplate(model, templateStr);
 //				String fileStr = path + File.separator + fileName;
-//				String filePath = StringUtil.replaceVariable(fileStr, variables);
+//				String filePath = PayUtil.replaceVariable(fileStr, variables);
 //				addFile(filePath, html, override);
-//				String relativePath = StringUtil.replaceVariable(fileDir + File.separator + fileName, variables);
+//				String relativePath = PayUtil.replaceVariable(fileDir + File.separator + fileName, variables);
 //				fileList.add(relativePath);
 //			}
 //		}

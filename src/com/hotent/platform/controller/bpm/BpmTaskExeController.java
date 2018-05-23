@@ -81,7 +81,7 @@ public class BpmTaskExeController extends BaseController {
 	@RequestMapping("assignSave")
 	@Action(description = "添加任务转办代理",execOrder=ActionExecOrder.AFTER,
 			detail=
-					"<#if StringUtil.isNotEmpty(isSuccess)>" +
+					"<#if PayUtil.isNotEmpty(isSuccess)>" +
 					"添加任务【${SysAuditLinkService.getProcessRunDetailLink(taskId)}】转办代理给【${SysAuditLinkService.getSysUserLink(Long.valueOf(assigneeId))}】" +
 					"成功" +
 					"<#else>添加任务转办代理失败</#if>")

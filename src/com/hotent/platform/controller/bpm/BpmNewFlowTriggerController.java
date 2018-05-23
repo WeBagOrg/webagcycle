@@ -162,7 +162,7 @@ public class BpmNewFlowTriggerController extends BaseController
 		if(bpmNewFlowTrigger != null){
 			String jsonMaping = bpmNewFlowTrigger.getJsonmaping();
 			String triggerJson = bpmNewFlowTrigger.getTriggerJson();
-			/*if(StringUtil.isNotEmpty(jsonMaping)){
+			/*if(PayUtil.isNotEmpty(jsonMaping)){
 				bpmNewFlowTrigger.setJsonmaping(JSONUtil.escapeSpecialChar(jsonMaping));
 				bpmNewFlowTrigger.setTriggerJson(JSONUtil.escapeSpecialChar(triggerJson));
 			}*/

@@ -215,18 +215,18 @@
 	</servlet>
 	
 	<!--<servlet>-->
-		<!--<servlet-name>weixin</servlet-name>-->
-		<!--<servlet-class>com.hotent.platform.weixin.WeixinServlet</servlet-class>-->
+		<!--<servlet-name>config</servlet-name>-->
+		<!--<servlet-class>com.hotent.platform.config.WeixinServlet</servlet-class>-->
 	<!--</servlet>-->
 	
 	<!--<servlet-mapping>-->
-		<!--<servlet-name>weixin</servlet-name>-->
+		<!--<servlet-name>config</servlet-name>-->
 		<!--<url-pattern>/wx</url-pattern>-->
 	<!--</servlet-mapping>-->
 	<!-- 
 	<servlet>
 		<servlet-name>auth</servlet-name>
-		<servlet-class>com.hotent.platform.weixin.AuthServlet</servlet-class>
+		<servlet-class>com.hotent.platform.config.AuthServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>

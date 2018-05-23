@@ -855,11 +855,11 @@ public class SysPlanController extends BaseController
 		Map<String, Object> actRightMap = bpmDefAuthorizeService.getActRightByUserMap(userId, BPMDEFAUTHORIZE_RIGHT_TYPE.INSTANCE, false, true);
 		// 获得流程分管授权与用户相关的信息集合的流程KEY
 		String defRights = (String) actRightMap.get("authorizeIds");
-		if(StringUtil.isNotEmpty(actRights)&&StringUtil.isNotEmpty(defRights)){
+		if(PayUtil.isNotEmpty(actRights)&&PayUtil.isNotEmpty(defRights)){
 			actRights += defRights;
-		}else if(StringUtil.isNotEmpty(actRights)&&StringUtil.isEmpty(defRights)){
+		}else if(PayUtil.isNotEmpty(actRights)&&PayUtil.isEmpty(defRights)){
 			actRights = actRights.substring(0, actRights.length()-1);
-		}else if(StringUtil.isEmpty(actRights)&&StringUtil.isNotEmpty(defRights)){
+		}else if(PayUtil.isEmpty(actRights)&&PayUtil.isNotEmpty(defRights)){
 			actRights = defRights;
 		}else{
 			actRights = "";

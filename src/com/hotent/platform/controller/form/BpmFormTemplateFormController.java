@@ -48,7 +48,7 @@ public class BpmFormTemplateFormController extends BaseFormController
 	 */
 	@RequestMapping("save")
 	@Action(description="添加或更新表单模板",
-			detail="<#if StringUtil.isNotEmpty(isAdd)>" +
+			detail="<#if PayUtil.isNotEmpty(isAdd)>" +
 					"<#if isAdd==0>添加<#else>更新</#if>" +
 					"表单验证规则【${SysAuditLinkService.getBpmFormTemplateLink(Long.valueOf(ruleId))}】成功" +
 					"<#else>添加或更新表单验证规则【${name}】失败</#if>")

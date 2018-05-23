@@ -883,18 +883,18 @@ public class MobileTaskController extends MobileBaseController {
 		}
 
 		// temp = request.getParameter("businessUrl");
-		// if (StringUtil.isNotEmpty(temp)) {
+		// if (PayUtil.isNotEmpty(temp)) {
 		// cmd.setBusinessUrl(temp);
 		// }
 		/**
 		 * 启动 外围系统保存的草稿时，需要从页面获取这2个属性
 		 */
 		// temp = request.getParameter("requestSystemId");
-		// if (StringUtil.isNotEmpty(temp)) {
+		// if (PayUtil.isNotEmpty(temp)) {
 		// cmd.setRequestSystemId(temp);
 		// }
 		// temp = request.getParameter("businessDocumentKey");
-		// if (StringUtil.isNotEmpty(temp)) {
+		// if (PayUtil.isNotEmpty(temp)) {
 		// cmd.setBusinessDocumentKey(temp);
 		// }
 
@@ -920,7 +920,7 @@ public class MobileTaskController extends MobileBaseController {
 
 		// temp = request.getParameter("signUserIds");
 		//
-		// if (StringUtil.isNotEmpty(temp)) {
+		// if (PayUtil.isNotEmpty(temp)) {
 		// cmd.setSignUserIds(temp);
 		// }
 		// 驳回

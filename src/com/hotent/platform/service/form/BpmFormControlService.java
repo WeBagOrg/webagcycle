@@ -144,7 +144,7 @@ public class BpmFormControlService {
 			return temp.replaceAll("'", "\"");
 			
 		}else {
-			//if (StringUtil.isNotEmpty(value)) {
+			//if (PayUtil.isNotEmpty(value)) {
 				Elements optElments = doc.select("option");
 				if(optElments.size()>0){
 					for(Element elment : optElments){

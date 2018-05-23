@@ -46,7 +46,7 @@ public class BpmFormDialogFormController extends BaseFormController
 	 */
 	@RequestMapping("save")
 	@Action(description="添加或更新通用表单对话框",
-	detail="<#if StringUtil.isNotEmpty(isAdd)>" +
+	detail="<#if PayUtil.isNotEmpty(isAdd)>" +
 			"<#if isAdd==0>添加<#else>更新</#if>" +
 			"通用表对话框【${SysAuditLinkService.getBpmFormDialogLink(Long.valueOf(dialogId))}】成功" +
 			"<#else>添加或更新通用表对话框【${name}】失败</#if>")

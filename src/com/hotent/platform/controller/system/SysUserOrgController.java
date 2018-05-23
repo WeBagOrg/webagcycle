@@ -272,7 +272,7 @@ public class SysUserOrgController extends BaseController
 //			resultMessage=new ResultMessage(ResultMessage.Success,"在组织添加用户成功!");
 //		} catch (Exception e) {
 //			String str = MessageUtil.getMessage();
-//			if (StringUtil.isNotEmpty(str)) {
+//			if (PayUtil.isNotEmpty(str)) {
 //				resultMessage = new ResultMessage(ResultMessage.Fail,"在组织添加用户中失败:" + str);
 //				response.getWriter().print(resultMessage);
 //			} else {

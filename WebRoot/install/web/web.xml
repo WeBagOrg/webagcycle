@@ -226,7 +226,7 @@
 	<!-- 
 	<servlet>
 		<servlet-name>auth</servlet-name>
-		<servlet-class>com.hotent.platform.weixin.AuthServlet</servlet-class>
+		<servlet-class>com.hotent.platform.config.AuthServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>

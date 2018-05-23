@@ -148,7 +148,7 @@ public class TabTag extends TagSupport {
 			sb.append(parameter + "=" + value + "&");
 		}
 //		String returnUrl = request.getParameter(RequestUtil.RETURNURL);
-//		if (StringUtil.isEmpty(returnUrl)) {
+//		if (PayUtil.isEmpty(returnUrl)) {
 ////			returnUrl = RequestUtil.getPrePage(request);
 ////			sb.append(RequestUtil.RETURNURL + "=" + returnUrl + "&");
 //		}

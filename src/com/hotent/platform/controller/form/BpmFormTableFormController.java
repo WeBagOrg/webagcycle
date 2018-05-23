@@ -50,7 +50,7 @@ public class BpmFormTableFormController extends BaseFormController {
 	@RequestMapping("saveTable")
 	@Action(description="添加自定义表",
 			execOrder=ActionExecOrder.AFTER,
-			detail="<#if StringUtil.isNotEmpty(isAdd)>" +
+			detail="<#if PayUtil.isNotEmpty(isAdd)>" +
 						"<#if isAdd==0>添加" +
 						"<#else>更新" +
 						"</#if>" +

@@ -1464,7 +1464,7 @@ public class TaskController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping("delegate")
-	@Action(description = "任务交办", detail = "<#if StringUtils.isNotEmpty(taskId) && StringUtil.isNotEmpty(userId)>" + "交办流程【${SysAuditLinkService.getProcessRunLink(taskId)}】的任务【${taskName}】" + "给用户【${SysAuditLinkService.getSysUserLink(Long.valueOf(userId))}】" + "</#if>")
+	@Action(description = "任务交办", detail = "<#if StringUtils.isNotEmpty(taskId) && PayUtil.isNotEmpty(userId)>" + "交办流程【${SysAuditLinkService.getProcessRunLink(taskId)}】的任务【${taskName}】" + "给用户【${SysAuditLinkService.getSysUserLink(Long.valueOf(userId))}】" + "</#if>")
 	public void delegate(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		PrintWriter writer = response.getWriter();
 		String taskId = request.getParameter("taskId");

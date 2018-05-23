@@ -1259,7 +1259,7 @@ public class BpmMobileTaskController extends BaseMobileController {
 		}
 
 		// temp = request.getParameter("businessUrl");
-		// if (StringUtil.isNotEmpty(temp)) {
+		// if (PayUtil.isNotEmpty(temp)) {
 		// cmd.setBusinessUrl(temp);
 		// }
 
@@ -1292,7 +1292,7 @@ public class BpmMobileTaskController extends BaseMobileController {
 
 		// temp = request.getParameter("signUserIds");
 		//
-		// if (StringUtil.isNotEmpty(temp)) {
+		// if (PayUtil.isNotEmpty(temp)) {
 		// cmd.setSignUserIds(temp);
 		// }
 		// 驳回

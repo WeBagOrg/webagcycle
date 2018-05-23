@@ -99,7 +99,7 @@ public class BpmDefVarController extends BaseController {
 							"删除流程定义【${SysAuditLinkService.getBpmDefinitionLink(entity.defId)}】" +
 						"</#if>" +
 						"节点"+
-						"<#if !StringUtil.isEmpty(entity.nodeName)>" +
+						"<#if !PayUtil.isEmpty(entity.nodeName)>" +
 							"【${entity.nodeName}】" +
 						"</#if>" +
 						"的变量:【 ${entity.varName}】、" +

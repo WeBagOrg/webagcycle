@@ -783,7 +783,7 @@ public class BpmFormTableController extends BaseController {
 	//
 	// tables.remove(tableName);
 	// String pkField = bpmFormTable.getPkField();
-	// if (StringUtil.isNotEmpty(pkField))
+	// if (PayUtil.isNotEmpty(pkField))
 	// pkField = "";
 	// mv.addObject("pkField", bpmFormTable.getPkField());
 	// mv.addObject("tables", tables);
@@ -818,7 +818,7 @@ public class BpmFormTableController extends BaseController {
 	// } catch (Exception e) {
 	// e.printStackTrace();
 	// String str = MessageUtil.getMessage();
-	// if (StringUtil.isNotEmpty(str)) {
+	// if (PayUtil.isNotEmpty(str)) {
 	// ResultMessage resultMessage = new ResultMessage(
 	// ResultMessage.Fail, "设置失败:" + str);
 	// response.getWriter().print(resultMessage);

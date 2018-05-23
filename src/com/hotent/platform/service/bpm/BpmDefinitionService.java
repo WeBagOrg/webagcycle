@@ -410,7 +410,7 @@ public class BpmDefinitionService extends BaseService<BpmDefinition> implements 
 //			Element element = (Element) node;
 //			String id = element.attributeValue("id");
 //			String name = element.attributeValue("name");
-//			if (StringUtil.isEmpty(id) || StringUtil.isEmpty(name))
+//			if (PayUtil.isEmpty(id) || PayUtil.isEmpty(name))
 //				continue;
 //			reskeyList.add(id);
 //			Map<String, String> map = new HashMap<String, String>();

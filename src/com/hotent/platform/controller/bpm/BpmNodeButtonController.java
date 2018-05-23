@@ -319,7 +319,7 @@ public class BpmNodeButtonController extends BaseController
 	@RequestMapping("init")
 	@Action(description="初始化操作按钮",
 			detail="初始化流程定义 【${SysAuditLinkService.getBpmDefinitionLink(Long.valueOf(defId))}】节点" +
-					"<#if !StringUtil.isEmpty(nodeId)>" +
+					"<#if !PayUtil.isEmpty(nodeId)>" +
 						"【${SysAuditLinkService.getNodeName(Long.valueOf(defId),nodeId)}】" +
 					"</#if>" +
 					"的操作按钮"

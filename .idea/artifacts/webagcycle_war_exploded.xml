@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="webagcycle:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/webagcycle_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="webagcycle" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="lib2" />
+          <element id="library" level="project" name="jsp" />
+          <element id="library" level="project" name="lib1" />
+          <element id="library" level="project" name="refLib" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="webagcycle/web/Web2" />
+      <element id="javaee-facet-resources" facet="webagcycle/web/Web" />
+      <element id="javaee-facet-resources" facet="webagcycle/web/Web3" />
+    </root>
+  </artifact>
+</component>

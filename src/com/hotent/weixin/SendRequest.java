@@ -22,7 +22,7 @@ public class SendRequest {
 		
 		//String url="http://qydev.weixin.qq.com/cgi-bin/apiagent?tid=36&URL=http%3A%2F%2Fhotent.eicp.net%2Fbpmx3%2Freceive&Token=hotent&EncodingAESKey=DJt7nwKc6zfy96K3QPY8ywdsyohCSWoemEWi4uhByyQ&EchoStr=11111222223333344444123&ToUserName=wxc6e093e6b81b98d1";
 		
-		String url="https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=52kScBCzqTlsZxR3OjdmHLFnniOOWrEXQJWpaiQbS9obSOWRFeaBdAU5fAXK831jNP9DPr4OU4tbKPju86T5Iw" ;
+		String url="https://qyapi.config.qq.com/cgi-bin/message/send?access_token=52kScBCzqTlsZxR3OjdmHLFnniOOWrEXQJWpaiQbS9obSOWRFeaBdAU5fAXK831jNP9DPr4OU4tbKPju86T5Iw" ;
 		
 		String rtn=HttpUtil.sendHttpsRequest(url, msg, "POST");
 		

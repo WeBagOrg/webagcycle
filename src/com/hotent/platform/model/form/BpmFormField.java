@@ -528,11 +528,11 @@ public class BpmFormField extends BaseModel implements Cloneable {
 	}
 
 	// public String getJsonOptions(){
-	// if(StringUtil.isEmpty(this.options))
+	// if(PayUtil.isEmpty(this.options))
 	// return "";
 	// String lanType = ContextUtil.getLocale().toString().toLowerCase();
 	// JSONArray jarray = new JSONArray();
-	// if(StringUtil.isJson(this.options)){
+	// if(PayUtil.isJson(this.options)){
 	// JSONArray jArray = JSONArray.fromObject(this.options);
 	// for(Object obj : jArray){
 	// JSONObject jObject = (JSONObject)obj;
@@ -551,7 +551,7 @@ public class BpmFormField extends BaseModel implements Cloneable {
 	// }
 	// }
 	// //未获取到对应语言版本的资源时 获取简体中文的资源
-	// if(StringUtil.isEmpty(value)){
+	// if(PayUtil.isEmpty(value)){
 	// value = zhVal;
 	// }
 	// jarray.add(new JSONObject().accumulate("key", key).accumulate("value",
@@ -572,10 +572,10 @@ public class BpmFormField extends BaseModel implements Cloneable {
 
 	// public Map<String,Object> getAryOptions() {
 	// Map<String,Object> map = new LinkedHashMap<String, Object>();
-	// if(StringUtil.isEmpty(this.options))
+	// if(PayUtil.isEmpty(this.options))
 	// return map;
 	// String lanType = ContextUtil.getLocale().toString().toLowerCase();
-	// if(StringUtil.isJson(this.options)){
+	// if(PayUtil.isJson(this.options)){
 	// JSONArray jArray = JSONArray.fromObject(this.options);
 	// for(Object obj : jArray){
 	// JSONObject jObject = (JSONObject)obj;
@@ -594,7 +594,7 @@ public class BpmFormField extends BaseModel implements Cloneable {
 	// }
 	// }
 	// //未获取到对应语言版本的资源时 获取简体中文的资源
-	// if(StringUtil.isEmpty(value)){
+	// if(PayUtil.isEmpty(value)){
 	// value = zhVal;
 	// }
 	// map.put(key,value);

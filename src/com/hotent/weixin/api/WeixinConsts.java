@@ -19,7 +19,7 @@ public class WeixinConsts {
 	 */
 	public static String getWxToken(String corpId,String secret){
 		//https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=id&corpsecret=secrect
-		return "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=" + corpId + "&corpsecret=" + secret;
+		return "https://qyapi.config.qq.com/cgi-bin/gettoken?corpid=" + corpId + "&corpsecret=" + secret;
 		
 	}
 	
@@ -34,7 +34,7 @@ public class WeixinConsts {
 	 */
 	public static String getWxAuthorize(String appId,String redirectUrl) throws UnsupportedEncodingException{
 		String redirect=URLEncoder.encode(redirectUrl, "utf-8");
-		String url="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+redirect+"&response_type=code&scope=SCOPE&state=hotent#wechat_redirect";
+		String url="https://open.config.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+redirect+"&response_type=code&scope=SCOPE&state=hotent#wechat_redirect";
 		return url;
 	}
 	
@@ -46,7 +46,7 @@ public class WeixinConsts {
 	 * @return
 	 */
 	public static String getWxUserInfo(String accessToken,String code){
-		String url="https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token="+accessToken+"&code=" + code;
+		String url="https://qyapi.config.qq.com/cgi-bin/user/getuserinfo?access_token="+accessToken+"&code=" + code;
 		return url;
 	}
 	

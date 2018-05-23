@@ -168,7 +168,7 @@ public class SysUserOrgService extends BaseService<UserPosition>
 //		
 //		if(BeanUtils.isEmpty(orgIds)) return;
 //		for(int i=0;i<orgIds.length;i++){				
-//			if(StringUtil.isEmpty(orgIds[i])) continue;
+//			if(PayUtil.isEmpty(orgIds[i])) continue;
 //			addUser(Long.parseLong(orgIds[i]),orgIdPrimary,userId);											   								
 //		}
 //	}
@@ -238,7 +238,7 @@ public class SysUserOrgService extends BaseService<UserPosition>
 	@Deprecated
 	public void addOrgUser(Long[] userIds,Long orgId) throws Exception
 	{
-//		if(BeanUtils.isEmpty(userIds)||StringUtil.isEmpty(orgId.toString())) return;	
+//		if(BeanUtils.isEmpty(userIds)||PayUtil.isEmpty(orgId.toString())) return;
 //		SysUserOrg sysUserOrg =null;
 //		for (Long userId : userIds){
 //			SysUserOrg userOrg= dao.getUserOrgModel(userId, orgId);

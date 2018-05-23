@@ -56,7 +56,7 @@ public class SysMobileUserController extends BaseMobileController {
 			SysUser sysUser = sysUserService.getById(userId);
 //			String pictureLoad = defaultUserImage;
 //			if (sysUser != null) {
-//				if (StringUtil.isNotEmpty(sysUser.getPicture())) {
+//				if (PayUtil.isNotEmpty(sysUser.getPicture())) {
 //					pictureLoad = sysUser.getPicture();
 //				}
 //			}

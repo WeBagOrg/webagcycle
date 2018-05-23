@@ -438,7 +438,7 @@ public class BpmFormTable extends BaseModel {
 //	public TableRelation getTableRelation() {
 //		if (this.isExternal == 0)
 //			return null;
-//		if (StringUtil.isEmpty(relation))
+//		if (PayUtil.isEmpty(relation))
 //			return null;
 //		return BpmFormTable.getRelationsByXml(this.relation);
 //	}
@@ -457,7 +457,7 @@ public class BpmFormTable extends BaseModel {
 	 */
 	@SuppressWarnings("unchecked")
 //	public static TableRelation getRelationsByXml(String relationXml) {
-//		if (StringUtil.isEmpty(relationXml))
+//		if (PayUtil.isEmpty(relationXml))
 //			return null;
 //		Document dom = Dom4jUtil.loadXml(relationXml);
 //		Element root = dom.getRootElement();

@@ -45,7 +45,7 @@ public class BpmFormQueryFormController extends BaseController
 	 */
 	@RequestMapping("save")
 	@Action(description="添加或更新通用表单查询",
-			detail="<#if StringUtil.isNotEmpty(isAdd)>" +
+			detail="<#if PayUtil.isNotEmpty(isAdd)>" +
 			"<#if isAdd==0>添加<#else>更新</#if>" +
 			"通用表单查询【${SysAuditLinkService.getBpmFormQueryLink(Long.valueOf(queryId))}】成功" +
 			"<#else>添加或更新通用表单查询【${name}】失败</#if>")

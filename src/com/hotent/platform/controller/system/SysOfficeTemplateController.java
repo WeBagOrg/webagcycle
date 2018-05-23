@@ -305,7 +305,7 @@ public class SysOfficeTemplateController extends BaseController
 			}
 		}else{
 			String filePath = attachPath +File.separator + sysOfficeTemplate.getPath();	
-		//	String fullPath = StringUtil.trimSufffix(attachPath, File.separator) + File.separator + filePath.replace("/", File.separator);
+		//	String fullPath = PayUtil.trimSufffix(attachPath, File.separator) + File.separator + filePath.replace("/", File.separator);
 			bytes = FileUtil.readByte(filePath);
 			if(bytes==null){
 				bytes =  sysOfficeTemplate.getTemplateBlob();

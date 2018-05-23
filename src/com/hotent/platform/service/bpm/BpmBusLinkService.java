@@ -97,7 +97,7 @@ public class BpmBusLinkService extends BaseService<BpmBusLink>
 			busLink.setBusFlowRunid(processRun.getRunId());
 			busLink.setBusStatus(BpmBusLink.BUS_STATUS_RUNNING);
 			
-//			if(StringUtil.isNotEmpty(processRun.getActInstId())){
+//			if(PayUtil.isNotEmpty(processRun.getActInstId())){
 //				busLink.setBusProcInstId(new Long( processRun.getActInstId()));
 //			}
 			

@@ -80,7 +80,7 @@ public class QueryBuilder {
 				continue;
 			String fieldName = tableField.getName();
 
-			// if(StringUtil.isNotEmpty(tableField.getFtable())){ //其它表的字段
+			// if(PayUtil.isNotEmpty(tableField.getFtable())){ //其它表的字段
 			// tables.add(tableField.getFtable());//如果有其它字段需要加入其它字段的表
 			// fieldName =
 			// QueryUtil.fixFieldName(fieldName,tableField.getVar(),tableField.getFtable(),true);

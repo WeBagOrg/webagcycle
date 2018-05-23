@@ -669,7 +669,7 @@ public class BpmService implements IScript
 //			Element element = (Element)node;
 //			String id = element.attributeValue("id");
 //			String name = element.attributeValue("name");
-//			if(StringUtil.isEmpty(id)||StringUtil.isEmpty(name))continue;
+//			if(PayUtil.isEmpty(id)||PayUtil.isEmpty(name))continue;
 //			BpmFormLanguage bpmFormLanguage =bpmFormLanguageService.getByIdAndNodeIdAndLan(actDefId, id,BpmFormLanguage.BPM_DEFINITION_TYPE);
 //			if(BeanUtils.isEmpty(bpmFormLanguage))continue;
 //			String newName = bpmFormLanguage.getResvalue();
@@ -702,7 +702,7 @@ public class BpmService implements IScript
 //		for(Node node : list){
 //			Element element = (Element)node;
 //			String text = element.getText();
-//			if(StringUtil.isEmpty(text))continue;
+//			if(PayUtil.isEmpty(text))continue;
 //			Element parentEle = element.getParent();
 //			String nodeId = Dom4jUtil.getString(parentEle, "id");
 //			BpmFormLanguage bpmFormLanguage =bpmFormLanguageService.getByIdAndNodeIdAndLan(actDefId, nodeId,BpmFormLanguage.BPM_DEFINITION_TYPE);
@@ -2009,7 +2009,7 @@ public class BpmService implements IScript
 		for (HistoricActivityInstanceEntity hisActInst : hisList) {
 //			Date startTime = hisActInst.getStartTime();
 			Date endTime = new Date();
-//			Long userId = StringUtil.isEmpty(assignee)?0:Long.valueOf(assignee);
+//			Long userId = PayUtil.isEmpty(assignee)?0:Long.valueOf(assignee);
 			
 //			Long duration = calendarAssignService.getRealWorkTime(startTime, endTime,userId );
 			hisActInst.setEndTime(endTime);

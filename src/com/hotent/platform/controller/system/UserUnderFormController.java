@@ -45,7 +45,7 @@ public class UserUnderFormController extends BaseFormController
 	 */
 	@RequestMapping("save")
 	@Action(description="添加或更新下属管理",
-			detail="<#if StringUtil.isNotEmpty(isAdd)>" +
+			detail="<#if PayUtil.isNotEmpty(isAdd)>" +
 					"为【${SysAuditLinkService.getSysUserLink(Long.valueOf(userid))}】" +
 					"<#if isAdd>添加<#else>更新</#if>" +
 					"下属【${SysAuditLinkService.getSysUserLink(Long.valueOf(underuserid))}】"+

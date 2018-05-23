@@ -1,5 +1,3 @@
-package com.hotent.platform.model.file;
-
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -11,7 +9,7 @@ import org.apache.commons.fileupload.servlet.*;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 
-import com.hotent.core.api.util.PropertyUtil;
+//import com.hotent.core.api.util.PropertyUtil;
 import com.hotent.platform.service.util.ServiceUtil;
 
 
@@ -214,7 +212,7 @@ public class Uploader {
 	 * @return
 	 */
 	private String getPhysicalPath(String path) {
-		path = PropertyUtil.getByAlias("file.upload")+File.separator+ path;
+//		path = PropertyUtil.getByAlias("file.upload")+File.separator+ path;
 		return path;
 		/*String servletPath = this.request.getServletPath();
 		String realPath = this.request.getSession().getServletContext()

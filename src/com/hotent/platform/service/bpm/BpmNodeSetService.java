@@ -426,22 +426,22 @@ public class BpmNodeSetService extends BaseService<BpmNodeSet> {
 	// return "";
 	// }
 	//
-	// if(StringUtil.isNotEmpty(bpmNodeSet.getDetailUrl())){
+	// if(PayUtil.isNotEmpty(bpmNodeSet.getDetailUrl())){
 	// detailUrl=bpmNodeSet.getDetailUrl();
 	// }
 	//
-	// if(StringUtil.isEmpty(detailUrl)){
+	// if(PayUtil.isEmpty(detailUrl)){
 	// BpmDefinition bpmDefintion=bpmDefinitionService.getByActDefId(actDefId);
 	// BpmNodeSet gloabalNodeSet=dao.getBySetType(bpmDefintion.getDefId(),
 	// BpmNodeSet.SetType_GloabalForm);
 	// if(BeanUtils.isNotEmpty(gloabalNodeSet)){
-	// if(StringUtil.isNotEmpty(gloabalNodeSet.getDetailUrl())){
+	// if(PayUtil.isNotEmpty(gloabalNodeSet.getDetailUrl())){
 	// detailUrl=gloabalNodeSet.getDetailUrl();
 	// }
 	// }
 	// }
-	// if(StringUtil.isNotEmpty(detailUrl)&&
-	// StringUtil.isNotEmpty(processRun.getBusinessKey())){
+	// if(PayUtil.isNotEmpty(detailUrl)&&
+	// PayUtil.isNotEmpty(processRun.getBusinessKey())){
 	// detailUrl=detailUrl.replaceFirst(BpmConst.FORM_PK_REGEX,
 	// processRun.getBusinessKey());
 	// if(!detailUrl.startsWith("http")){

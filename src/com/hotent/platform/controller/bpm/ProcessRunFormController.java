@@ -35,7 +35,8 @@ public class ProcessRunFormController extends BaseFormController
 	private ProcessRunService processRunService;
 	
 	/**
-	 * 添加或更新流程实例扩展。
+	 * 添加或更新流程实例扩展
+。
 	 * @param request
 	 * @param response
 	 * @param processRun 添加或更新的实体
@@ -46,7 +47,7 @@ public class ProcessRunFormController extends BaseFormController
 	 */
 	@RequestMapping("save")
 	@Action(description="添加或更新流程实例扩展",execOrder=ActionExecOrder.AFTER,
-			detail="<#if StringUtil.isNotEmpty(isAdd)>" +
+			detail="<#if PayUtil.isNotEmpty(isAdd)>" +
 					"<#if isAdd==0>添加" +
 					"<#else>更新" +
 					"</#if>" +

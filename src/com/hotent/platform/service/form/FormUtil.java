@@ -1918,7 +1918,7 @@ public class FormUtil {
 	 * 
 	 * JSONObject obj=(JSONObject)jsonObject.get("search");
 	 * 
-	 * if(obj==null){ bpmFormField.setIsQuery((short)0); } JSONObject jsonObj=null; String ctlProperty= bpmFormField.getCtlProperty(); if(StringUtil.isNotEmpty(ctlProperty)){ jsonObj=JSONObject.fromObject(ctlProperty); } else{ jsonObj=JSONObject.fromObject("{}"); } String searchFrom=obj.getString("searchFrom"); String searchValue=""; int condValFrom=1; if(searchFrom.equalsIgnoreCase("fromStatic")){ condValFrom=2; searchValue=obj.getString("searchValue"); } else if(searchFrom.equalsIgnoreCase("fromScript")){ condValFrom=3; searchValue=obj.getString("searchValue"); }
+	 * if(obj==null){ bpmFormField.setIsQuery((short)0); } JSONObject jsonObj=null; String ctlProperty= bpmFormField.getCtlProperty(); if(PayUtil.isNotEmpty(ctlProperty)){ jsonObj=JSONObject.fromObject(ctlProperty); } else{ jsonObj=JSONObject.fromObject("{}"); } String searchFrom=obj.getString("searchFrom"); String searchValue=""; int condValFrom=1; if(searchFrom.equalsIgnoreCase("fromStatic")){ condValFrom=2; searchValue=obj.getString("searchValue"); } else if(searchFrom.equalsIgnoreCase("fromScript")){ condValFrom=3; searchValue=obj.getString("searchValue"); }
 	 * 
 	 * jsonObj.element("condition", obj.getString("condition")); jsonObj.element("condValFrom",condValFrom); jsonObj.element("condValue",searchValue);
 	 * 

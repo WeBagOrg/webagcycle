@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="NtkoOfficeControlSetup">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/WebRoot/media/office/NtkoOfficeControlSetup.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
