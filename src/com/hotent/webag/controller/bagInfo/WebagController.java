@@ -2,6 +2,7 @@ package com.hotent.webag.controller.bagInfo;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.hotent.core.web.controller.BaseController;
 import com.hotent.platform.annotion.Action;
 import com.hotent.webag.service.bagInfo.WebagService;
 import com.hotent.webag.until.IpAddressUtil;
@@ -22,7 +23,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/webag/")
-public class WebagController {
+public class WebagController extends BaseController {
 
     private static Logger logger = Logger.getLogger(WebagController.class);
 

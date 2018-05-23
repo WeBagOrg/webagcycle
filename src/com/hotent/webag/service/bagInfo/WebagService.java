@@ -9,6 +9,7 @@ import com.hotent.webag.vo.AppletPayVo;
 import org.apache.log4j.Logger;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.codehaus.xfire.util.Base64;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -26,6 +27,7 @@ import java.util.*;
  * @author fengqian
  * date 2018/5/17 15:34
  */
+@Service
 public class WebagService {
 
     private static Logger log = Logger.getLogger(WebagService.class);
