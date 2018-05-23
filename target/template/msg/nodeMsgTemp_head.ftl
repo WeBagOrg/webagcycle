@@ -1,3 +1,0 @@
-${type}
-<#if 
-${subjet}  ${cause}
