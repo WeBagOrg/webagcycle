@@ -5,7 +5,13 @@
 <title>回收袋信息管理</title>
 <%@include file="/commons/include/get.jsp" %>
 <script type="text/javascript">
-
+    $(function() {
+        var options={};
+        if(showResponse){
+            options.success=showResponse;
+        }
+        var frm=$('#webagBaginfoForm').form();
+	});
 	function startFlow(obj,id){
 		var linkObj=$(obj);
 		if(!linkObj.hasClass('disabled')) {
@@ -53,6 +59,30 @@
 	   }
 
     }
+
+    /**
+     *  导出二维码
+     */
+    function downLoadZip(){
+        if ($(":checkbox[name=id]:checked").size() == 0) {
+            alert("请至少选择一条记录进行导出操作！");
+        }else{
+            var checkboxs=$(":checkbox[name=id]:checked");
+            var idsValue='';
+            for(var i=0;i<checkboxs.size();i++){
+                idsValue+=checkboxs[i].value+',';
+            }
+            if(idsValue!=''){
+                idsValue=idsValue.substring(0, idsValue.length-1);
+            }
+            $(document.body).append('<form id = "queryForm" method="post" action="downLoadZip.ht"></form>');
+            var queryForm = $('#queryForm');
+            //清空内容
+            queryForm.empty();
+            queryForm.append("<input type='hidden' name='ids' value='"+idsValue+"'>");
+            queryForm.submit();//表单提交
+        }
+    }
 </script>
 </head>
 <body>
@@ -70,6 +100,8 @@
 					<div class="group"><a class="link update" id="btnUpd" action="edit.ht"><span></span>修改</a></div>--%>
 					<div class="l-bar-separator"></div>
 					<div class="group"><a class="link add2"  href="javascript:void(0)" onclick="addQRs()"><span></span>批量生成二维码</a></div>
+                    <div class="l-bar-separator"></div>
+                    <div class="group"><a class="link import"  onclick="downLoadZip()"><span></span>批量下载二维码</a></div>
 				</div>	
 			</div>
 			<div class="panel-search">
@@ -114,7 +146,10 @@
 					</c:if>
 					<a href="edit.ht?id=${webagBaginfoItem.id}" class="link edit"><span></span>编辑</a>
 					<a href="get.ht?id=${webagBaginfoItem.id}" class="link detail"><span></span>明细</a>
-					<a href="addQR.ht?id=${webagBaginfoItem.id}" class="link add2"><span></span>生成二维码</a>
+					<c:if test="${empty webagBaginfoItem.QRUrl}">
+						<a href="addQR.ht?id=${webagBaginfoItem.id}" class="link add2"><span></span>生成二维码</a>
+					</c:if>
+
 				</display:column>
 			</display:table>
 			<hotent:paging tableId="webagBaginfoItem"/>

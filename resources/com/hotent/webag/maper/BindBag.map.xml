@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.hotent.webag.model.bindBagInfo.BindBag">
+	<resultMap id="BindBaginfo" type="com.hotent.webag.model.bindBagInfo.BindBag">
+
+		<result property="bagNo" column="bagNo" jdbcType="VARCHAR"/>
+		<result property="bindTime" column="bindTime" jdbcType="DATE"/>
+		<result property="unBindTime" column="unBindTime" jdbcType="DATE"/>
+		<result property="userOpenId" column="userOpenId" jdbcType="VARCHAR"/>
+		<result property="bindStauts" column="bindStauts" jdbcType="NUMERIC"/>
+
+	</resultMap>
+	
+
+
+	<sql id="columns">
+		bagNo,bindTime,unBindTime,userOpenId,bindStauts
+	</sql>
+
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(ID)"> AND ID  =#{ID} </if>
+			<if test="@Ognl@isNotEmpty(bagNo)"> AND BAGNO  LIKE '%${bagNo}%'  </if>
+			<if test="@Ognl@isNotEmpty(createDate)"> AND CREATEDATE  =#{createDate} </if>
+			<if test="@Ognl@isNotEmpty(begincreateDate)"> AND CREATEDATE  >=#{begincreateDate,jdbcType=DATE} </if>
+			<if test="@Ognl@isNotEmpty(endcreateDate)"> AND CREATEDATE <![CDATA[ <=#{endcreateDate,jdbcType=DATE}]]> </if>
+			<if test="@Ognl@isNotEmpty(creatorName)"> AND CREATORNAME  LIKE '%${creatorName}%'  </if>
+			<if test="@Ognl@isNotEmpty(bagStatus)"> AND BAGSTATUS  =#{bagStatus}  </if>
+			<if test="@Ognl@isStringArray(bagStatus)">
+				AND bagStatus IN
+				<foreach collection="bagStatus" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+			</if>
+			<if test="@Ognl@isStringValue(bagStatus)">AND bagStatus = #{bagStatus}</if>
+			<if test="@Ognl@isStringArray(ids)">
+				AND ID IN
+				<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+			</if>
+			<if test="@Ognl@isStringValue(ids)">AND ID = #{ids}</if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="com.hotent.webag.model.bindBagInfo.BindBag">
+		INSERT INTO webag_userbindbag
+		(bagNo,bindTime,unBindTime,userOpenId,bindStauts)
+		VALUES
+		( #{bagNo,jdbcType=VARCHAR}, #{bindTime,jdbcType=DATE}, #{unBindTime,jdbcType=DATE}, #{userOpenId,jdbcType=VARCHAR}, #{bindStauts,jdbcType=NUMERIC})
+	</insert>
+
+	
+		    
+	<select id="getById" parameterType="java.lang.Long" resultMap="BindBaginfo">
+		SELECT <include refid="columns"/>
+		FROM webag_baginfo
+		WHERE
+		ID=#{id}
+	</select>
+	
+	<select id="getAll" resultMap="BindBaginfo">
+		SELECT <include refid="columns"/>
+		FROM webag_userbindbag
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by bagNo desc
+		</if>
+	</select>
+	
+	
+	
+
+</mapper>

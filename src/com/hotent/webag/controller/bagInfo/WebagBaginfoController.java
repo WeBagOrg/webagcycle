@@ -5,13 +5,17 @@ package com.hotent.webag.controller.bagInfo;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hotent.core.util.*;
 import com.hotent.webag.model.bagInfo.WebagBaginfo;
+import com.hotent.webag.model.bindBagInfo.BindBag;
 import com.hotent.webag.service.bagInfo.WebagBaginfoService;
+import com.hotent.webag.service.bindBagInfo.BindBagService;
 import com.hotent.webag.until.GetWeChatOpenId;
 import com.hotent.webag.until.produceQRcodeTool;
 import net.sf.json.JSON;
@@ -20,23 +24,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.hotent.platform.annotion.Action;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import com.hotent.core.util.UniqueIdUtil;
 import com.hotent.core.web.util.RequestUtil;
 import com.hotent.core.web.controller.BaseController;
-import com.hotent.core.util.BeanUtils;
 import com.hotent.core.web.query.QueryFilter;
 import com.hotent.core.page.PageList;
 import com.hotent.platform.model.system.SysUser;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import com.hotent.core.bpm.util.BpmUtil;
 import net.sf.json.JSONObject;
-import com.hotent.core.util.MapUtil;
 
 
 import com.hotent.core.web.ResultMessage;
 import com.hotent.core.engine.GroovyScriptEngine;
 import com.hotent.platform.service.system.IdentityService;
-import com.hotent.core.util.StringUtil;
 import com.hotent.core.api.util.ContextUtil;
 import com.hotent.core.bpm.model.ProcessCmd;
 import com.hotent.platform.model.bpm.ProcessRun;
@@ -56,7 +56,8 @@ public class WebagBaginfoController extends BaseController
 	private IdentityService identityService;
 	@Resource
 	private ProcessRunService processRunService;
-	
+	@Resource
+	private BindBagService bindBagService;
 	/**
 	 * 添加或更新回收袋信息。
 	 * @param request
@@ -303,28 +304,34 @@ public class WebagBaginfoController extends BaseController
 	@Action(description="为回收袋绑定二维码")
 	public void addQR(HttpServletRequest request, HttpServletResponse response) throws Exception
 	{
+		String preUrl= RequestUtil.getPrePage(request);
 		String resultMsg=null;
 		Long[]  lAryId=RequestUtil.getLongAryByStr(request,"id");
+        ResultMessage message=null;
 		//根据id获取回收袋信息
 		for(int i=0; i<lAryId.length;i++){
 			WebagBaginfo webagBaginfo = webagBaginfoService.getById(lAryId[i]);
-			File logoFile = new File("D://webag/logo.png");
-			String fileName = "D://webag"+File.separator+webagBaginfo.getBagNo()+".png";
+			File logoFile = new File("../usr/local/webag/logo.png");
+			String fileName = "../usr/local/webag"+File.separator+webagBaginfo.getBagNo()+".png";
 			File QrCodeFile = new File(fileName);
-			String url = "http://140.143.211.183:8080/webag/bagInfo/webagBaginfo/userBindQR.ht?bagNo="+webagBaginfo.getBagNo();
+			String url = "https://www.webagcycle.com/webagcycle_war/webag/bagInfo/webagBaginfo/userBindQR.ht?bagNo="+webagBaginfo.getBagNo();
 			String note = "NO."+webagBaginfo.getBagNo();
 
 				try {
 					produceQRcodeTool.drawLogoQRCode(logoFile, QrCodeFile, url, note);
 				}catch (Exception e){
-					writeResultMessage(response.getWriter(),"生成二维码失败",ResultMessage.Fail);
+                    message=new ResultMessage(ResultMessage.Fail, "生成二维码失败!");
+					//writeResultMessage(response.getWriter(),"生成二维码失败",ResultMessage.Fail);
 				}
 				webagBaginfo.setIsHaveQR("已生成");
 				webagBaginfo.setQRUrl(fileName);
 				webagBaginfoService.update(webagBaginfo);
 			}
-		writeResultMessage(response.getWriter(),"生成完毕",ResultMessage.Success);
+        message=new ResultMessage(ResultMessage.Success, "生成完毕!");
+		//writeResultMessage(response.getWriter(),"生成完毕",ResultMessage.Success);
 
+        addMessage(message, request);
+		response.sendRedirect(preUrl);
 	}
 
 	/**
@@ -337,7 +344,7 @@ public class WebagBaginfoController extends BaseController
 	@RequestMapping("userBindQR")
 	@ResponseBody
 	@Action(description="用户扫码绑定二维码")
-	public void userBindQR(HttpServletRequest request, HttpServletResponse response) throws Exception
+	public Integer userBindQR(HttpServletRequest request, HttpServletResponse response) throws Exception
 	{
 		String wxCode = request.getParameter("code");
 		String bagNo = request.getParameter("bagNo");
@@ -350,7 +357,72 @@ public class WebagBaginfoController extends BaseController
 		requestUrlParam.put("grant_type", "authorization_code");//默认参数 authorization_code
 		//发送post请求读取调用微信 https://api.weixin.qq.com/sns/jscode2session 接口获取openid用户唯一标识
 		JSONObject jsonObject =JSONObject.fromObject(GetWeChatOpenId.sendPost(requestUrl, requestUrlParam)) ;
-		System.out.print(jsonObject.toString());
+		//将用户微信id和袋子做绑定
+		String userOpenId = jsonObject.get("openId").toString();
+		int res = webagBaginfoService.setuserBindQR(userOpenId,bagNo);
+		//System.out.print(jsonObject.toString());
+		return res;
+		}
+    /**
+     * 取得二维码信息分页列表
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("QRCode")
+    @Action(description="查看回收袋信息分页列表")
+    public ModelAndView QRCode(HttpServletRequest request,HttpServletResponse response) throws Exception
+    {
+        List<WebagBaginfo> list=webagBaginfoService.getAll(new QueryFilter(request,"webagBaginfoItem"));
+        ModelAndView mv=this.getAutoView().addObject("webagBaginfoList",list);
+        return mv;
+    }
+	/**
+	 * 导出二维码
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("downLoadZip")
+	@Action(description="导出二维码")
+	public ModelAndView downLoadZip(HttpServletRequest request, HttpServletResponse response) throws Exception
+	{
+		String ids=RequestUtil.getString(request,"ids");
+		//根据ids的值，获取对应的二维码，以List<WebagBaginfo>存储
+		List<WebagBaginfo> webagBaginfoList = webagBaginfoService.getBagsListByIds(ids);
+		//将打包好的zip文件，先放入一个临时文件夹中，如 C:/zip/用户名_时间
+		SysUser sysUser=(SysUser) ContextUtil.getCurrentUser();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		//设置临时文件下载地址
+		String dir=AppConfigUtil.get("zipPath")!=null?AppConfigUtil.get("zipPath"):"C:/zip/";
+		String fileDir=dir+sysUser.getUsername()+"_"+df.format(new Date());
+		File file =new File(fileDir);
+		if(!file.exists() || !file.isDirectory()){
+			file.mkdirs();
 		}
 
+		webagBaginfoService.discloseTechnical(webagBaginfoList,fileDir);
+
+		webagBaginfoService.exportZip(fileDir, request, response);
+		return null;
+	}
+	/**
+	 * 取得回收袋绑定信息(微信)
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("getbindInfo")
+	@ResponseBody
+	@Action(description="取得回收袋绑定信息")
+	public JSONObject getbindInfo(HttpServletRequest request, HttpServletResponse response) throws Exception
+	{
+		String wechatId=RequestUtil.getString(request,"wechatId");
+		List<BindBag> list = bindBagService.getByWechatId(wechatId);
+		JSONObject jsonObject = JSONObject.fromObject(list);
+		return jsonObject;
+	}
 }

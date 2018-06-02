@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.hotent.webag.model.userAccount.WebagUserAccount">
+	<resultMap id="WebagUserAccount" type="com.hotent.webag.model.userAccount.WebagUserAccount">
+		<id property="id" column="ID" jdbcType="NUMERIC"/>
+		<result property="userWechatId" column="USERWECHATID" jdbcType="VARCHAR"/>
+		<result property="account" column="ACCOUNT" jdbcType="NUMERIC"/>
+		<result property="nickName" column="NICKNAME" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+
+	<sql id="columns">
+		ID,USERWECHATID,ACCOUNT,NICKNAME
+	</sql>
+	<sql id="wfColumns">
+		ID,USERWECHATID,ACCOUNT,NICKNAME
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(id)"> AND ID  =#{id} </if>
+			<if test="@Ognl@isNotEmpty(userWechatId)"> AND USERWECHATID  LIKE '%${userWechatId}%'  </if>
+			<if test="@Ognl@isNotEmpty(nickName)"> AND NICKNAME  LIKE '%${nickName}%'  </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="com.hotent.webag.model.userAccount.WebagUserAccount">
+		INSERT INTO webag_user_account
+		(ID,USERWECHATID,ACCOUNT,NICKNAME)
+		VALUES
+		(#{id,jdbcType=NUMERIC}, #{userWechatId,jdbcType=VARCHAR}, #{account,jdbcType=NUMERIC}, #{nickName,jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM webag_user_account 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<update id="update" parameterType="com.hotent.webag.model.userAccount.WebagUserAccount">
+		UPDATE webag_user_account SET
+		USERWECHATID=#{userWechatId,jdbcType=VARCHAR},
+		ACCOUNT=#{account,jdbcType=NUMERIC},
+		NICKNAME=#{nickName,jdbcType=VARCHAR}
+		WHERE
+		ID=#{id}
+	</update>
+	
+		    
+	<select id="getById" parameterType="java.lang.Long" resultMap="WebagUserAccount">
+		SELECT <include refid="columns"/>
+		FROM webag_user_account
+		WHERE
+		ID=#{id}
+	</select>
+	
+	<select id="getAll" resultMap="WebagUserAccount">
+		SELECT <include refid="columns"/>
+		FROM webag_user_account   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by ID desc
+		</if>
+	</select>
+	
+	
+	
+</mapper>

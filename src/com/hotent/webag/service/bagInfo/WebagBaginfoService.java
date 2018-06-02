@@ -1,12 +1,15 @@
 package com.hotent.webag.service.bagInfo;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+import java.io.File;
+import java.util.*;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import com.hotent.platform.service.util.ServiceUtil;
 import com.hotent.webag.dao.bagInfo.WebagBaginfoDao;
 import com.hotent.webag.model.bagInfo.WebagBaginfo;
+import com.hotent.webag.until.DownLoadFiles;
+import net.sf.json.JSONArray;
 import org.springframework.stereotype.Service;
 import com.hotent.core.db.IEntityDao;
 import com.hotent.core.service.GenericService;
@@ -131,4 +134,50 @@ public class WebagBaginfoService extends WfBaseService<WebagBaginfo>
 		result.setBusinessKey(id.toString());
 		BpmAspectUtil.setBpmResult(result);
 	}
+	/**
+	 * 导出二维码
+	 */
+	public List<WebagBaginfo> getBagsListByIds(String ids){
+		return dao. getBagsListByIds(ids);
+	}
+
+	public void discloseTechnical(List<WebagBaginfo> webagBaginfoList,String fileDir) {
+		//String attachPath = ServiceUtil.getBasePath().replace("/", File.separator);
+		List<File> files =new ArrayList<File>();
+		List<String> fileNameList=new ArrayList<String>();
+		for(int i=0;i<webagBaginfoList.size();i++){
+			WebagBaginfo webagBaginfo =webagBaginfoList.get(i);
+			String realPath = webagBaginfo.getQRUrl();
+			String fileName = webagBaginfo.getBagNo() + ".png" ;
+			File file=new File(realPath);
+			files.add(file);
+			fileNameList.add(fileName);
+
+			try {
+				String zipDir=fileDir+"/"+new Date()+".zip";
+			DownLoadFiles.downLoadFiles(files,fileNameList, zipDir);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+	public void exportZip(String fileDir, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			DownLoadFiles.downLoadFiles(fileDir, request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 用户扫码绑定二维码。
+	 * @param userOpenId
+	 * @param bagNo
+	 * @return
+	 * @throws Exception
+	 */
+    public int setuserBindQR(String userOpenId, String bagNo) {
+		return dao.setuserBindQR(userOpenId,bagNo);
+
+    }
 }

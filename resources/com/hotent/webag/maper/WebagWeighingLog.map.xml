@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.hotent.webag.model.weighingLog.WebagWeighingLog">
+	<resultMap id="WebagWeighingLog" type="com.hotent.webag.model.weighingLog.WebagWeighingLog">
+		<id property="id" column="ID" jdbcType="NUMERIC"/>
+		<result property="weighingLogNo" column="WEIGHINGLOGNO" jdbcType="VARCHAR"/>
+		<result property="wasteTypeNo" column="WASTETYPENO" jdbcType="VARCHAR"/>
+		<result property="bagNo" column="BAGNO" jdbcType="VARCHAR"/>
+		<result property="thePriceOfTheTime" column="THEPRICEOFTHETIME" jdbcType="VARCHAR"/>
+		<result property="weight" column="WEIGHT" jdbcType="VARCHAR"/>
+		<result property="amountOfRebate" column="AMOUNTOFREBATE" jdbcType="NUMERIC"/>
+		<result property="createDate" column="CREATEDATE" jdbcType="DATE"/>
+		<result property="creatorId" column="CREATORID" jdbcType="NUMERIC"/>
+	</resultMap>
+	
+
+	<sql id="columns">
+		ID,WEIGHINGLOGNO,WASTETYPENO,BAGNO,THEPRICEOFTHETIME,WEIGHT,AMOUNTOFREBATE,CREATEDATE,CREATORID
+	</sql>
+	<sql id="wfColumns">
+		ID,WEIGHINGLOGNO,WASTETYPENO,BAGNO,THEPRICEOFTHETIME,WEIGHT,AMOUNTOFREBATE,CREATEDATE,CREATORID
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(id)"> AND ID  =#{id} </if>
+			<if test="@Ognl@isNotEmpty(weighingLogNo)"> AND WEIGHINGLOGNO  LIKE '%${weighingLogNo}%'  </if>
+			<if test="@Ognl@isNotEmpty(wasteTypeNo)"> AND WASTETYPENO  LIKE '%${wasteTypeNo}%'  </if>
+			<if test="@Ognl@isNotEmpty(bagNo)"> AND BAGNO  LIKE '%${bagNo}%'  </if>
+			<if test="@Ognl@isNotEmpty(thePriceOfTheTime)"> AND THEPRICEOFTHETIME  LIKE '%${thePriceOfTheTime}%'  </if>
+			<if test="@Ognl@isNotEmpty(weight)"> AND WEIGHT  LIKE '%${weight}%'  </if>
+			<if test="@Ognl@isNotEmpty(createDate)"> AND CREATEDATE  =#{createDate} </if>
+			<if test="@Ognl@isNotEmpty(begincreateDate)"> AND CREATEDATE  >=#{begincreateDate,jdbcType=DATE} </if>
+			<if test="@Ognl@isNotEmpty(endcreateDate)"> AND CREATEDATE <![CDATA[ <=#{endcreateDate,jdbcType=DATE}]]> </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="com.hotent.webag.model.weighingLog.WebagWeighingLog">
+		INSERT INTO webag_weighing_log
+		(ID,WEIGHINGLOGNO,WASTETYPENO,BAGNO,THEPRICEOFTHETIME,WEIGHT,AMOUNTOFREBATE,CREATEDATE,CREATORID)
+		VALUES
+		(#{id,jdbcType=NUMERIC}, #{weighingLogNo,jdbcType=VARCHAR}, #{wasteTypeNo,jdbcType=VARCHAR}, #{bagNo,jdbcType=VARCHAR}, #{thePriceOfTheTime,jdbcType=VARCHAR}, #{weight,jdbcType=VARCHAR}, #{amountOfRebate,jdbcType=NUMERIC}, #{createDate,jdbcType=DATE}, #{creatorId,jdbcType=NUMERIC})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM webag_weighing_log 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<update id="update" parameterType="com.hotent.webag.model.weighingLog.WebagWeighingLog">
+		UPDATE webag_weighing_log SET
+		WEIGHINGLOGNO=#{weighingLogNo,jdbcType=VARCHAR},
+		WASTETYPENO=#{wasteTypeNo,jdbcType=VARCHAR},
+		BAGNO=#{bagNo,jdbcType=VARCHAR},
+		THEPRICEOFTHETIME=#{thePriceOfTheTime,jdbcType=VARCHAR},
+		WEIGHT=#{weight,jdbcType=VARCHAR},
+		AMOUNTOFREBATE=#{amountOfRebate,jdbcType=NUMERIC},
+		CREATEDATE=#{createDate,jdbcType=DATE},
+		CREATORID=#{creatorId,jdbcType=NUMERIC}
+		WHERE
+		ID=#{id}
+	</update>
+	
+		    
+	<select id="getById" parameterType="java.lang.Long" resultMap="WebagWeighingLog">
+		SELECT <include refid="columns"/>
+		FROM webag_weighing_log
+		WHERE
+		ID=#{id}
+	</select>
+	
+	<select id="getAll" resultMap="WebagWeighingLog">
+		SELECT <include refid="columns"/>
+		FROM webag_weighing_log   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by ID desc
+		</if>
+	</select>
+	
+	
+	
+</mapper>

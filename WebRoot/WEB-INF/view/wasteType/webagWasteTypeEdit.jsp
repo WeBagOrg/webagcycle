@@ -3,7 +3,7 @@
 <%@include file="/commons/include/kindeditor.jsp" %>
 <html>
 <head>
-	<title>编辑 回收袋信息</title>
+	<title>编辑 webag_waste_type</title>
 	<%@include file="/codegen/include/customForm.jsp" %>
 	<script type="text/javascript" src="${ctx}/js/hotent/formdata.js"></script>
 	<script type="text/javascript" src="${ctx}/js/hotent/CustomValid.js"></script>
@@ -15,7 +15,7 @@
 			if(showResponse){
 				options.success=showResponse;
 			}
-			var frm=$('#webagBaginfoForm').form();
+			var frm=$('#webagWasteTypeForm').form();
 			$("a.save").click(function() {
 				frm.ajaxForm(options);
 				$("#saveData").val(1);
@@ -33,18 +33,18 @@
 					if(OfficePlugin.officeObjs.length>0){
 						OfficePlugin.submit(function(){
 							frm.handleFieldName();
-							$('#webagBaginfoForm').submit();
+							$('#webagWasteTypeForm').submit();
 						});
 					}else{
 						frm.handleFieldName();
-						$('#webagBaginfoForm').submit();
+						$('#webagWasteTypeForm').submit();
 					}
 				}
 			});
 			$("a.run").click(function() {
 				frm.ajaxForm(options);
 				$("#saveData").val(0);
-				$('#webagBaginfoForm').attr("action","run.ht");
+				$('#webagWasteTypeForm').attr("action","run.ht");
 				if(frm.valid()){
 					if(WebSignPlugin.hasWebSignField){
 						WebSignPlugin.submit();
@@ -54,7 +54,7 @@
 					$("#formData").val(data);
 					frm.handleFieldName();
 					OfficePlugin.submit();
-					$('#webagBaginfoForm').submit();
+					$('#webagWasteTypeForm').submit();
 				}
 			});
 		});
@@ -66,7 +66,7 @@
 					if(rtn){
 						window.location.href = window.location.href;
 					}else{
-						window.location.href = "${ctx}/webag/bagInfo/webagBaginfo/list.ht";
+						window.location.href = "${ctx}/webag/wasteType/webagWasteType/list.ht";
 					}
 				});
 			} else {
@@ -80,11 +80,11 @@
 	<div class="panel-top">
 		<div class="tbar-title">
 		    <c:choose>
-			    <c:when test="${not empty webagBaginfoItem.id}">
-			        <span class="tbar-label"><span></span>编辑回收袋信息</span>
+			    <c:when test="${not empty webagWasteTypeItem.id}">
+			        <span class="tbar-label"><span></span>编辑webag_waste_type</span>
 			    </c:when>
 			    <c:otherwise>
-			        <span class="tbar-label"><span></span>添加回收袋信息</span>
+			        <span class="tbar-label"><span></span>添加webag_waste_type</span>
 			    </c:otherwise>	
 		    </c:choose>
 		</div>
@@ -92,10 +92,10 @@
 			<div class="toolBar">
 				<div class="group"><a class="link save" id="dataFormSave" href="javascript:;"><span></span>保存</a></div>
 				<div class="l-bar-separator"></div>
-				<%--<c:if test="${runId==0}">
+				<c:if test="${runId==0}">
 				<div class="group"><a class="link run"  href="javascript:;"><span></span>提交</a></div>
 				<div class="l-bar-separator"></div>
-				</c:if>--%>
+				</c:if>
 				<c:if test="${runId!=0}">
 					<div class="group"><a class="link detail"  onclick="FlowDetailWindow({runId:${runId}})" href="javascript:;" ><span></span>流程明细</a></div>
 					<div class="l-bar-separator"></div>
@@ -104,47 +104,43 @@
 			</div>
 		</div>
 	</div>
-	<form id="webagBaginfoForm" method="post" action="save.ht">
+	<form id="webagWasteTypeForm" method="post" action="save.ht">
 		<div type="custform">
 			<div class="panel-detail">
 				<table class="formTable" cellspacing="0" cellpadding="2" border="1">
  <tbody>
   <tr>
-   <td colspan="2" class="formHead">回收袋信息</td>
+   <td colspan="2" class="formHead">webag_waste_type</td>
   </tr>
   <tr>
-   <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">袋子编号:</td>
-   <td class="formInput" style="width:80%;"><span name="editable-input" style="display:inline-block;" isflag="tableflag"><input name="m:webagBaginfo:bagNo" lablename="袋子编号" class="inputText" validate="{maxlength:54}" isflag="tableflag" type="text" value="${webagBaginfo.bagNo}" /></span></td>
+   <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">废品类型编号:</td>
+   <td class="formInput" style="width:80%;"><span name="editable-input" style="display:inline-block;" isflag="tableflag"><input name="m:webagWasteType:wasteTypeNo" lablename="废品类型编号" class="inputText" validate="{maxlength:100}" isflag="tableflag" type="text" value="${webagWasteType.wasteTypeNo}" /></span></td>
   </tr>
   <tr>
-   <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">添加时间:</td>
-   <td class="formInput" style="width:80%;"><input name="m:webagBaginfo:createDate" class="Wdate" displaydate="1" datefmt="yyyy-MM-dd" validate="{empty:false}" type="text" value="<fmt:formatDate value='${webagBaginfo.createDate}' pattern='yyyy-MM-dd'/>" /></td>
+   <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">废品类型名称:</td>
+   <td class="formInput" style="width:80%;"><span name="editable-input" style="display:inline-block;" isflag="tableflag"><input name="m:webagWasteType:wasteTypeName" lablename="废品类型名称" class="inputText" validate="{maxlength:256}" isflag="tableflag" type="text" value="${webagWasteType.wasteTypeName}" /></span></td>
   </tr>
   <tr>
-   <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">创建者:</td>
-   <td class="formInput" style="width:80%;"><span name="editable-input" style="display:inline-block;" isflag="tableflag"><input name="m:webagBaginfo:creatorName" lablename="创建者" class="inputText" validate="{maxlength:600}" isflag="tableflag" type="text" value="${webagBaginfo.creatorName}" /></span></td>
+   <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">废品类型单价:</td>
+   <td class="formInput" style="width:80%;"><input name="m:webagWasteType:wasteTypePrice" validate="{maxlength:10}" type="text" value="${webagWasteType.wasteTypePrice}" /></td>
+  </tr>
+  <tr>
+   <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">废品类型描述信息:</td>
+   <td class="formInput" style="width:80%;"><span name="editable-input" style="display:inline-block;" isflag="tableflag"><input name="m:webagWasteType:wasteTypeDescribe" lablename="废品类型描述信息" class="inputText" validate="{maxlength:512}" isflag="tableflag" type="text" value="${webagWasteType.wasteTypeDescribe}" /></span></td>
+  </tr>
+  <tr>
+   <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">创建时间:</td>
+   <td class="formInput" style="width:80%;"><input name="m:webagWasteType:createDate" class="Wdate" displaydate="1" datefmt="yyyy-MM-dd HH:mm:ss" validate="{empty:false}" type="text" value="<fmt:formatDate value='${webagWasteType.createDate}' pattern='yyyy-MM-dd'/>" /></td>
   </tr>
   <tr>
    <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">创建者id:</td>
-   <td class="formInput" style="width:80%;"><input name="m:webagBaginfo:creatorId" showtype="{"coinValue":"","isShowComdify":0,"decimalValue":0}" validate="{number:true,maxIntLen:18,maxDecimalLen:0}" type="text" value="${webagBaginfo.creatorId}" /></td>
-  </tr>
-  <tr>
-   <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">使用次数:</td>
-   <td class="formInput" style="width:80%;"><input name="m:webagBaginfo:useTime" showtype="validate="{number:true,maxIntLen:19,maxDecimalLen:0}"" type="text" value="${webagBaginfo.useTime}" /></td>
-  </tr>
-  <tr>
-   <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">袋子是否启用:</td>
-   <td class="formInput" style="width:80%;"><label><input name="m:webagBaginfo:bagStatus" value="是" lablename="袋子是否启用" validate="{}" type="radio" data="${webagBaginfo.bagStatus}" />是</label><label><input name="m:webagBaginfo:bagStatus" value="否" lablename="袋子是否启用" validate="{}" type="radio" data="${webagBaginfo.bagStatus}" />否</label></td>
-  </tr>
-  <tr>
-	  <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">二维码:</td>
-	  <td class="formInput" style="width:80%;"><img src="${webagBaginfo.QRUrl}" width="200px" height="200px"/></td>
+   <td class="formInput" style="width:80%;"><input name="m:webagWasteType:creatorId" showtype="{"coinValue":"","isShowComdify":0,"decimalValue":0}" validate="{number:true,maxIntLen:18,maxDecimalLen:0}" type="text" value="${webagWasteType.creatorId}" /></td>
   </tr>
  </tbody>
 </table>
 			</div>
 		</div>
-		<input type="hidden" name="id" value="${webagBaginfo.id}"/>
+		<input type="hidden" name="id" value="${webagWasteType.id}"/>
 		<input type="hidden" id="saveData" name="saveData"/>
 		<input type="hidden" name="executeType"  value="start" />
 	</form>

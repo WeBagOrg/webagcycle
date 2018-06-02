@@ -57,6 +57,10 @@
    <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">袋子是否启用:</td>
    <td class="formInput" style="width:80%;"><label><input name="m:webag_baginfo:bagStatus" value="是" lablename="袋子是否启用" validate="{}" type="radio" disabled="disabled" data="${webagBaginfo.bagStatus}" />是</label><label><input name="m:webag_baginfo:bagStatus" value="否" lablename="袋子是否启用" validate="{}" type="radio" disabled="disabled" data="${webagBaginfo.bagStatus}" />否</label></td>
   </tr>
+  <tr>
+      <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">二维码:</td>
+      <td class="formInput" style="width:80%;"><img src="${webagBaginfo.QRUrl}" width="200px" height="200px"/></td>
+  </tr>
  </tbody>
 </table>
 </body>

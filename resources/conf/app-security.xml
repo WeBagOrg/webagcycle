@@ -123,6 +123,19 @@
 				<!-- 修改密码页面 -->
 				<value>/platform/system/sysUser/commonResetPwdView.ht</value>
 				<value>/platform/system/sysUser/commonResetPwd.ht</value>
+				<!--webag-->
+				<value>/webag/bagInfo/webagBaginfo/userBindQR.ht</value>
+				<value>/webag/getSessionKeyOropenid.ht</value>
+				<value>/webag/getUserInfo.ht</value>
+				<value>/webag/appletPay.ht</value>
+				<value>/webag/billDetail/webagBillDetail/getByWechatId.ht</value>
+				<value>/webag/bagInfo/webagBaginfo/getbindInfo.ht</value>
+				<value>
+					/webag/weighingLog/webagWeighingLog/saveWeighingLog.ht
+				</value>
+				<value>
+					/webag/wasteType/webagWasteType/getAllWasteTypeApp.ht
+				</value>
 			</set>
 		</property>
 	</bean>

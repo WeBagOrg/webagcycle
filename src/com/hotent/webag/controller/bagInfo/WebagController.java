@@ -46,8 +46,17 @@ public class WebagController extends BaseController {
             String code = request.getParameter("code");
             jsonObject = webagService.getSessionKeyOropenid(code);
             logger.info("getSessionKeyOropenid返回结果："+jsonObject);
+            //对返回结果进行解析，调用getUserInfo
+            if(jsonObject!=null){
+                String openId=jsonObject.getString("openid");
+                String sessionKey=jsonObject.getString("session_key");
+                String encryptedData = request.getParameter("encryptedData");
+                String iv = request.getParameter("iv");
+                jsonObject = webagService.getUserInfo(encryptedData,sessionKey,iv);
+                logger.info("getUserInfo返回结果："+jsonObject);
+            }
         } catch (Exception e) {
-            logger.info("获取用户sessionkey和openid失败");
+            logger.info("获取用户信息失败");
             logger.error(e.getMessage(),e);
         }
         return jsonObject;

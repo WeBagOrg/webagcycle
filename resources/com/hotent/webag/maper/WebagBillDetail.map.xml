@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.hotent.webag.model.billDetial.WebagBillDetail">
+	<resultMap id="WebagBillDetail" type="com.hotent.webag.model.billDetial.WebagBillDetail">
+		<id property="id" column="ID" jdbcType="NUMERIC"/>
+		<result property="userWeChatID" column="USERWECHATID" jdbcType="VARCHAR"/>
+		<result property="bagNo" column="BAGNO" jdbcType="VARCHAR"/>
+		<result property="creatTime" column="CREATTIME" jdbcType="DATE"/>
+		<result property="staffId" column="STAFFID" jdbcType="NUMERIC"/>
+		<result property="staffName" column="STAFFNAME" jdbcType="VARCHAR"/>
+		<result property="wasteType" column="WASTETYPE" jdbcType="VARCHAR"/>
+		<result property="weight" column="WEIGHT" jdbcType="NUMERIC"/>
+		<result property="unitPrice" column="UNITPRICE" jdbcType="NUMERIC"/>
+		<result property="totalPrice" column="TOTALPRICE" jdbcType="NUMERIC"/>
+		<result property="isSendMsg" column="ISSENDMSG" jdbcType="VARCHAR"/>
+		<result property="nickName" column="NICKNAME" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+
+	<sql id="columns">
+		ID,USERWECHATID,BAGNO,CREATTIME,STAFFID,STAFFNAME,WASTETYPE,WEIGHT,UNITPRICE,TOTALPRICE,ISSENDMSG,NICKNAME
+	</sql>
+	<sql id="wfColumns">
+		ID,USERWECHATID,BAGNO,CREATTIME,STAFFID,STAFFNAME,WASTETYPE,WEIGHT,UNITPRICE,TOTALPRICE,ISSENDMSG,NICKNAME
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(id)"> AND ID  =#{id} </if>
+			<if test="@Ognl@isNotEmpty(userWeChatID)"> AND USERWECHATID  LIKE '%${userWeChatID}%'  </if>
+			<if test="@Ognl@isNotEmpty(bagNo)"> AND BAGNO  LIKE '%${bagNo}%'  </if>
+			<if test="@Ognl@isNotEmpty(creatTime)"> AND CREATTIME  =#{creatTime} </if>
+			<if test="@Ognl@isNotEmpty(begincreatTime)"> AND CREATTIME  >=#{begincreatTime,jdbcType=DATE} </if>
+			<if test="@Ognl@isNotEmpty(endcreatTime)"> AND CREATTIME <![CDATA[ <=#{endcreatTime,jdbcType=DATE}]]> </if>
+			<if test="@Ognl@isNotEmpty(staffName)"> AND STAFFNAME  LIKE '%${staffName}%'  </if>
+			<if test="@Ognl@isNotEmpty(wasteType)"> AND WASTETYPE  LIKE '%${wasteType}%'  </if>
+			<if test="@Ognl@isNotEmpty(isSendMsg)"> AND ISSENDMSG  LIKE '%${isSendMsg}%'  </if>
+			<if test="@Ognl@isNotEmpty(nickName)"> AND NICKNAME  LIKE '%${nickName}%'  </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="com.hotent.webag.model.billDetial.WebagBillDetail">
+		INSERT INTO webag_bill_detail
+		(ID,USERWECHATID,BAGNO,CREATTIME,STAFFID,STAFFNAME,WASTETYPE,WEIGHT,UNITPRICE,TOTALPRICE,ISSENDMSG,NICKNAME)
+		VALUES
+		(#{id,jdbcType=NUMERIC}, #{userWeChatID,jdbcType=VARCHAR}, #{bagNo,jdbcType=VARCHAR}, #{creatTime,jdbcType=DATE}, #{staffId,jdbcType=NUMERIC}, #{staffName,jdbcType=VARCHAR}, #{wasteType,jdbcType=VARCHAR}, #{weight,jdbcType=NUMERIC}, #{unitPrice,jdbcType=NUMERIC}, #{totalPrice,jdbcType=NUMERIC}, #{isSendMsg,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM webag_bill_detail 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<update id="update" parameterType="com.hotent.webag.model.billDetial.WebagBillDetail">
+		UPDATE webag_bill_detail SET
+		USERWECHATID=#{userWeChatID,jdbcType=VARCHAR},
+		BAGNO=#{bagNo,jdbcType=VARCHAR},
+		CREATTIME=#{creatTime,jdbcType=DATE},
+		STAFFID=#{staffId,jdbcType=NUMERIC},
+		STAFFNAME=#{staffName,jdbcType=VARCHAR},
+		WASTETYPE=#{wasteType,jdbcType=VARCHAR},
+		WEIGHT=#{weight,jdbcType=NUMERIC},
+		UNITPRICE=#{unitPrice,jdbcType=NUMERIC},
+		TOTALPRICE=#{totalPrice,jdbcType=NUMERIC},
+		ISSENDMSG=#{isSendMsg,jdbcType=VARCHAR},
+		NICKNAME=#{nickName,jdbcType=VARCHAR}
+		WHERE
+		ID=#{id}
+	</update>
+	
+		    
+	<select id="getById" parameterType="java.lang.Long" resultMap="WebagBillDetail">
+		SELECT <include refid="columns"/>
+		FROM webag_bill_detail
+		WHERE
+		ID=#{id}
+	</select>
+	
+	<select id="getAll" resultMap="WebagBillDetail">
+		SELECT <include refid="columns"/>
+		FROM webag_bill_detail   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by ID desc
+		</if>
+	</select>
+
+	<select id="getByWechatId" parameterType="java.lang.Long" resultMap="WebagBillDetail">
+		SELECT <include refid="columns"/>
+		FROM webag_bill_detail
+		WHERE
+		USERWECHATID=#{wechatid}
+	</select>
+	
+</mapper>

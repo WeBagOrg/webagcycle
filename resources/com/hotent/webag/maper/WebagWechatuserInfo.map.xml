@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.hotent.webag.model.wechatInfo.WebagWechatuserInfo">
+	<resultMap id="WebagWechatuserInfo" type="com.hotent.webag.model.wechatInfo.WebagWechatuserInfo">
+		<id property="id" column="ID" jdbcType="NUMERIC"/>
+		<result property="nickName" column="NICKNAME" jdbcType="VARCHAR"/>
+		<result property="openId" column="OPENID" jdbcType="VARCHAR"/>
+		<result property="province" column="PROVINCE" jdbcType="VARCHAR"/>
+		<result property="city" column="CITY" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATETIME" jdbcType="DATE"/>
+	</resultMap>
+	
+
+	<sql id="columns">
+		ID,NICKNAME,OPENID,PROVINCE,CITY,CREATETIME
+	</sql>
+	<sql id="wfColumns">
+		ID,NICKNAME,OPENID,PROVINCE,CITY,CREATETIME
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(id)"> AND ID  =#{id} </if>
+			<if test="@Ognl@isNotEmpty(nickName)"> AND NICKNAME  LIKE '%${nickName}%'  </if>
+			<if test="@Ognl@isNotEmpty(openId)"> AND OPENID  LIKE '%${openId}%'  </if>
+			<if test="@Ognl@isNotEmpty(province)"> AND PROVINCE  LIKE '%${province}%'  </if>
+			<if test="@Ognl@isNotEmpty(city)"> AND CITY  LIKE '%${city}%'  </if>
+			<if test="@Ognl@isNotEmpty(createTime)"> AND CREATETIME  =#{createTime} </if>
+			<if test="@Ognl@isNotEmpty(begincreateTime)"> AND CREATETIME  >=#{begincreateTime,jdbcType=DATE} </if>
+			<if test="@Ognl@isNotEmpty(endcreateTime)"> AND CREATETIME <![CDATA[ <=#{endcreateTime,jdbcType=DATE}]]> </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="com.hotent.webag.model.wechatInfo.WebagWechatuserInfo">
+		INSERT INTO webag_wechatuser_info
+		(ID,NICKNAME,OPENID,PROVINCE,CITY,CREATETIME)
+		VALUES
+		(#{id,jdbcType=NUMERIC}, #{nickName,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM webag_wechatuser_info 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<update id="update" parameterType="com.hotent.webag.model.wechatInfo.WebagWechatuserInfo">
+		UPDATE webag_wechatuser_info SET
+		NICKNAME=#{nickName,jdbcType=VARCHAR},
+		OPENID=#{openId,jdbcType=VARCHAR},
+		PROVINCE=#{province,jdbcType=VARCHAR},
+		CITY=#{city,jdbcType=VARCHAR},
+		CREATETIME=#{createTime,jdbcType=DATE}
+		WHERE
+		ID=#{id}
+	</update>
+	
+		    
+	<select id="getById" parameterType="java.lang.Long" resultMap="WebagWechatuserInfo">
+		SELECT <include refid="columns"/>
+		FROM webag_wechatuser_info
+		WHERE
+		ID=#{id}
+	</select>
+	
+	<select id="getAll" resultMap="WebagWechatuserInfo">
+		SELECT <include refid="columns"/>
+		FROM webag_wechatuser_info   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by ID desc
+		</if>
+	</select>
+	
+	
+	
+</mapper>

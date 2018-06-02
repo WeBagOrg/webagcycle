@@ -40,6 +40,47 @@
         </sourceRoots>
       </configuration>
     </facet>
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/resources/conf/app-action.xml</file>
+          <file>file://$MODULE_DIR$/resources/conf/app-activiti.xml</file>
+          <file>file://$MODULE_DIR$/resources/conf/app-beans.xml</file>
+          <file>file://$MODULE_DIR$/resources/conf/app-context.xml</file>
+          <file>file://$MODULE_DIR$/resources/conf/app-cxf-service.xml</file>
+          <file>file://$MODULE_DIR$/resources/conf/app-jms.xml</file>
+          <file>file://$MODULE_DIR$/resources/conf/app-resources.xml</file>
+          <file>file://$MODULE_DIR$/resources/conf/app-security-cas.xml</file>
+          <file>file://$MODULE_DIR$/resources/conf/app-security.xml</file>
+          <file>file://$MODULE_DIR$/resources/conf/app-test.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/activiti-spring-5.15.1.jar!/org/activiti/spring/components/config/annotations/ActivitiConfiguration.class</file>
+          <file>file://$MODULE_DIR$/WebRoot/WEB-INF/lib/activiti-spring-5.15.1.jar</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-all.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-addr.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-corba.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-http-binding.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-http-jetty.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-http.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-javascript-client.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-jaxws.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-jms.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-local.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-management.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-object-binding.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/osgi/cxf-extension-osgi.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-policy.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-rm.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-soap.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-ws-security.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-wstx-msv-validation.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-extension-xml.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf-servlet.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/cxf.xml</file>
+          <file>jar://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar!/META-INF/cxf/java2wsbeans.xml</file>
+          <file>file://$MODULE_DIR$/WebRoot/WEB-INF/lib/cxf-2.5.2.jar</file>
+        </fileset>
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
@@ -56,5 +97,6 @@
     <orderEntry type="library" name="refLib" level="project" />
     <orderEntry type="library" name="lib3" level="project" />
     <orderEntry type="library" name="lib4" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>

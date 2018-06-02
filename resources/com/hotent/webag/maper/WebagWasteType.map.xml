@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-<mapper namespace="com.hotent.webag.model.bagInfo.WebagBaginfo">
-	<resultMap id="WebagBaginfo" type="com.hotent.webag.model.bagInfo.WebagBaginfo">
+<mapper namespace="com.hotent.webag.model.wasteType.WebagWasteType">
+	<resultMap id="WebagWasteType" type="com.hotent.webag.model.wasteType.WebagWasteType">
 		<id property="id" column="ID" jdbcType="NUMERIC"/>
-		<result property="bagNo" column="BAGNO" jdbcType="VARCHAR"/>
+		<result property="wasteTypeNo" column="WASTETYPENO" jdbcType="VARCHAR"/>
+		<result property="wasteTypeName" column="WASTETYPENAME" jdbcType="VARCHAR"/>
+		<result property="wasteTypePrice" column="WASTETYPEPRICE" jdbcType="NUMERIC"/>
+		<result property="wasteTypeDescribe" column="WASTETYPEDESCRIBE" jdbcType="VARCHAR"/>
 		<result property="createDate" column="CREATEDATE" jdbcType="DATE"/>
-		<result property="creatorName" column="CREATORNAME" jdbcType="VARCHAR"/>
 		<result property="creatorId" column="CREATORID" jdbcType="NUMERIC"/>
-		<result property="useTime" column="USETIME" jdbcType="NUMERIC"/>
-		<result property="bagStatus" column="BAGSTATUS" jdbcType="VARCHAR"/>
-		<result property="isHaveQR" column="isHaveQR" jdbcType="VARCHAR"/>
-		<result property="QRUrl" column="QRUrl" jdbcType="VARCHAR"/>
 	</resultMap>
 	
-	<resultMap type="com.hotent.webag.model.bagInfo.WebagBaginfo" id="ExtWebagBaginfo" extends="WebagBaginfo">
+	<resultMap type="com.hotent.webag.model.wasteType.WebagWasteType" id="ExtWebagWasteType" extends="WebagWasteType">
 		<id property="taskId" column="TASK_ID" jdbcType="NUMERIC"/>
 		<id property="nodeId" column="TASK_DEF_KEY_" jdbcType="VARCHAR"/>
 		<id property="nodeName" column="NODE_NAME_" jdbcType="VARCHAR"/>
@@ -22,72 +20,60 @@
 	</resultMap>
 
 	<sql id="columns">
-		ID,BAGNO,CREATEDATE,CREATORNAME,CREATORID,USETIME,BAGSTATUS,isHaveQR,QRUrl
+		ID,WASTETYPENO,WASTETYPENAME,WASTETYPEPRICE,WASTETYPEDESCRIBE,CREATEDATE,CREATORID
 	</sql>
 	<sql id="wfColumns">
-		ID,BAGNO,CREATEDATE,CREATORNAME,CREATORID,USETIME,BAGSTATUS,isHaveQR,QRUrl
+		ID,WASTETYPENO,WASTETYPENAME,WASTETYPEPRICE,WASTETYPEDESCRIBE,CREATEDATE,CREATORID
 	</sql>
 	
 	<sql id="dynamicWhere">
 		<where>
-			<if test="@Ognl@isNotEmpty(ID)"> AND ID  =#{ID} </if>
-			<if test="@Ognl@isNotEmpty(bagNo)"> AND BAGNO  LIKE '%${bagNo}%'  </if>
+			<if test="@Ognl@isNotEmpty(id)"> AND ID  =#{id} </if>
+			<if test="@Ognl@isNotEmpty(wasteTypeNo)"> AND WASTETYPENO  LIKE '%${wasteTypeNo}%'  </if>
+			<if test="@Ognl@isNotEmpty(wasteTypeName)"> AND WASTETYPENAME  LIKE '%${wasteTypeName}%'  </if>
+			<if test="@Ognl@isNotEmpty(wasteTypeDescribe)"> AND WASTETYPEDESCRIBE  LIKE '%${wasteTypeDescribe}%'  </if>
 			<if test="@Ognl@isNotEmpty(createDate)"> AND CREATEDATE  =#{createDate} </if>
 			<if test="@Ognl@isNotEmpty(begincreateDate)"> AND CREATEDATE  >=#{begincreateDate,jdbcType=DATE} </if>
 			<if test="@Ognl@isNotEmpty(endcreateDate)"> AND CREATEDATE <![CDATA[ <=#{endcreateDate,jdbcType=DATE}]]> </if>
-			<if test="@Ognl@isNotEmpty(creatorName)"> AND CREATORNAME  LIKE '%${creatorName}%'  </if>
-			<!--<if test="@Ognl@isNotEmpty(bagStatus)"> AND BAGSTATUS  =#{bagStatus}  </if>-->
-			<if test="@Ognl@isStringArray(bagStatus)">
-				AND bagStatus IN
-				<foreach collection="bagStatus" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
-			</if>
-			<if test="@Ognl@isStringValue(bagStatus)">AND bagStatus = #{bagStatus}</if>
-			<if test="@Ognl@isStringArray(ids)">
-				AND ID IN
-				<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
-			</if>
-			<if test="@Ognl@isStringValue(ids)">AND ID = #{ids}</if>
 		</where>
 	</sql>
 
-	<insert id="add" parameterType="com.hotent.webag.model.bagInfo.WebagBaginfo">
-		INSERT INTO webag_baginfo
-		(ID,BAGNO,CREATEDATE,CREATORNAME,CREATORID,USETIME,BAGSTATUS,isHaveQR,QRUrl)
+	<insert id="add" parameterType="com.hotent.webag.model.wasteType.WebagWasteType">
+		INSERT INTO webag_waste_type
+		(ID,WASTETYPENO,WASTETYPENAME,WASTETYPEPRICE,WASTETYPEDESCRIBE,CREATEDATE,CREATORID)
 		VALUES
-		(#{id,jdbcType=NUMERIC}, #{bagNo,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, #{creatorName,jdbcType=VARCHAR}, #{creatorId,jdbcType=NUMERIC}, #{useTime,jdbcType=NUMERIC}, #{bagStatus,jdbcType=VARCHAR}, #{isHaveQR,jdbcType=VARCHAR}, #{QRUrl,jdbcType=VARCHAR})
+		(#{id,jdbcType=NUMERIC}, #{wasteTypeNo,jdbcType=VARCHAR}, #{wasteTypeName,jdbcType=VARCHAR}, #{wasteTypePrice,jdbcType=NUMERIC}, #{wasteTypeDescribe,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, #{creatorId,jdbcType=NUMERIC})
 	</insert>
 	
 	<delete id="delById" parameterType="java.lang.Long">
-		DELETE FROM webag_baginfo 
+		DELETE FROM webag_waste_type 
 		WHERE
 		ID=#{id}
 	</delete>
 	
-	<update id="update" parameterType="com.hotent.webag.model.bagInfo.WebagBaginfo">
-		UPDATE webag_baginfo SET
-		BAGNO=#{bagNo,jdbcType=VARCHAR},
+	<update id="update" parameterType="com.hotent.webag.model.wasteType.WebagWasteType">
+		UPDATE webag_waste_type SET
+		WASTETYPENO=#{wasteTypeNo,jdbcType=VARCHAR},
+		WASTETYPENAME=#{wasteTypeName,jdbcType=VARCHAR},
+		WASTETYPEPRICE=#{wasteTypePrice,jdbcType=NUMERIC},
+		WASTETYPEDESCRIBE=#{wasteTypeDescribe,jdbcType=VARCHAR},
 		CREATEDATE=#{createDate,jdbcType=DATE},
-		CREATORNAME=#{creatorName,jdbcType=VARCHAR},
-		CREATORID=#{creatorId,jdbcType=NUMERIC},
-		USETIME=#{useTime,jdbcType=NUMERIC},
-		BAGSTATUS=#{bagStatus,jdbcType=VARCHAR},
-		isHaveQR= #{isHaveQR,jdbcType=VARCHAR},
-		QRUrl=#{QRUrl,jdbcType=VARCHAR}
+		CREATORID=#{creatorId,jdbcType=NUMERIC}
 		WHERE
 		ID=#{id}
 	</update>
 	
 		    
-	<select id="getById" parameterType="java.lang.Long" resultMap="WebagBaginfo">
+	<select id="getById" parameterType="java.lang.Long" resultMap="WebagWasteType">
 		SELECT <include refid="columns"/>
-		FROM webag_baginfo
+		FROM webag_waste_type
 		WHERE
 		ID=#{id}
 	</select>
 	
-	<select id="getAll" resultMap="WebagBaginfo">
+	<select id="getAll" resultMap="WebagWasteType">
 		SELECT <include refid="columns"/>
-		FROM webag_baginfo   
+		FROM webag_waste_type   
 		<include refid="dynamicWhere" />
 		<if test="@Ognl@isNotEmpty(orderField)">
 		order by ${orderField} ${orderSeq}
@@ -99,21 +85,21 @@
 	
 	
 	
-	<select id="getDraftByUser" resultMap="WebagBaginfo">
+	<select id="getDraftByUser" resultMap="WebagWasteType">
 		SELECT <include refid="wfColumns"/>  ,B.runId
-		FROM webag_baginfo A,BPM_PRO_RUN B
+		FROM webag_waste_type A,BPM_PRO_RUN B
 		WHERE A.ID=B.BUSINESSKEY_NUM AND B.STATUS=4
 		and B.CREATORID=#{userId}
 		order by B.CREATETIME DESC
 	</select>
 	
 	
-	<select id="getMyTodoTask" resultMap="ExtWebagBaginfo">
+	<select id="getMyTodoTask" resultMap="ExtWebagWasteType">
 		SELECT * FROM (
 		SELECT <include refid="wfColumns"/> ,
 		C.ID_ TASK_ID,C.TASK_DEF_KEY_,B.RUNID FLOW_RUNID,C.PROC_INST_ID_,
 		C.NAME_ NODE_NAME_,C.CREATE_TIME_ TASK_CREATE_TIME_
-		FROM webag_baginfo A,BPM_PRO_RUN B ,
+		FROM webag_waste_type A,BPM_PRO_RUN B ,
 		ACT_RU_TASK C
 		WHERE A.ID=B.BUSINESSKEY_NUM AND B.ACTINSTID=C.PROC_INST_ID_ AND C.ASSIGNEE_=#{userId}
 		
@@ -122,7 +108,7 @@
 		SELECT <include refid="wfColumns"/>,
 		C.ID_ TASK_ID,C.TASK_DEF_KEY_,B.RUNID FLOW_RUNID,C.PROC_INST_ID_,
 		C.NAME_ NODE_NAME_,C.CREATE_TIME_ TASK_CREATE_TIME_
-		FROM webag_baginfo A,BPM_PRO_RUN B ,
+		FROM webag_waste_type A,BPM_PRO_RUN B ,
 		ACT_RU_TASK C,
 		ACT_RU_IDENTITYLINK D
 		WHERE A.ID=B.BUSINESSKEY_NUM AND B.ACTINSTID=C.PROC_INST_ID_ 
@@ -134,7 +120,7 @@
 		SELECT <include refid="wfColumns"/>,
 		C.ID_ TASK_ID,C.TASK_DEF_KEY_,B.RUNID FLOW_RUNID,C.PROC_INST_ID_,
 		C.NAME_ NODE_NAME_,C.CREATE_TIME_ TASK_CREATE_TIME_
-		FROM webag_baginfo A,BPM_PRO_RUN B ,
+		FROM webag_waste_type A,BPM_PRO_RUN B ,
 		ACT_RU_TASK C,
 		ACT_RU_IDENTITYLINK D
 		WHERE A.ID=B.BUSINESSKEY_NUM AND B.ACTINSTID=C.PROC_INST_ID_ 
@@ -147,7 +133,7 @@
 		SELECT <include refid="wfColumns"/>,
 		C.ID_ TASK_ID,C.TASK_DEF_KEY_,B.RUNID FLOW_RUNID,C.PROC_INST_ID_,
 		C.NAME_ NODE_NAME_,C.CREATE_TIME_ TASK_CREATE_TIME_
-		FROM webag_baginfo A,BPM_PRO_RUN B ,
+		FROM webag_waste_type A,BPM_PRO_RUN B ,
 		ACT_RU_TASK C,
 		ACT_RU_IDENTITYLINK D
 		WHERE A.ID=B.BUSINESSKEY_NUM AND B.ACTINSTID=C.PROC_INST_ID_ 
@@ -160,7 +146,7 @@
 		SELECT <include refid="wfColumns"/>,
 		C.ID_ TASK_ID,C.TASK_DEF_KEY_,B.RUNID FLOW_RUNID,C.PROC_INST_ID_,
 		C.NAME_ NODE_NAME_,C.CREATE_TIME_ TASK_CREATE_TIME_
-		FROM webag_baginfo A,BPM_PRO_RUN B ,
+		FROM webag_waste_type A,BPM_PRO_RUN B ,
 		ACT_RU_TASK C,
 		ACT_RU_IDENTITYLINK D
 		WHERE A.ID=B.BUSINESSKEY_NUM AND B.ACTINSTID=C.PROC_INST_ID_ 
@@ -190,21 +176,12 @@
 	</select>
 	
 	
-	<select id="getEndByUser" resultMap="WebagBaginfo">
+	<select id="getEndByUser" resultMap="WebagWasteType">
 		SELECT <include refid="wfColumns"/>  ,B.runId
-		FROM webag_baginfo A,BPM_PRO_RUN_HIS B
+		FROM webag_waste_type A,BPM_PRO_RUN_HIS B
 		WHERE A.ID=B.BUSINESSKEY_NUM 
 		and B.CREATORID=#{userId} and B.STATUS=2
 		order by B.ENDTIME DESC
 	</select>
-
-	<select id="getBagsListByIds" resultMap="WebagBaginfo">
-		SELECT <include refid="columns"/>  FROM webag_baginfo <include refid="dynamicWhere" />
-	</select>
-	<insert id="setUserBindQR" >
-		INSERT INTO webag_userbindbag
-		(bagNo,userOpenId,bindTime,bindStauts)
-		VALUES
-		(#{bagNo,jdbcType=VARCHAR}, #{userOpenId,jdbcType=VARCHAR}, #{bindTime,jdbcType=DATE}, #{bindStauts,jdbcType=NUMERIC})
-	</insert>
+	
 </mapper>
