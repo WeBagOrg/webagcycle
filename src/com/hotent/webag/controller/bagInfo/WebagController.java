@@ -42,18 +42,21 @@ public class WebagController extends BaseController {
     @ResponseBody
     public JSONObject getSessionKeyOropenid(HttpServletRequest request, HttpServletResponse response) {
         JSONObject jsonObject = null;
+
         try {
             String code = request.getParameter("code");
             jsonObject = webagService.getSessionKeyOropenid(code);
             logger.info("getSessionKeyOropenid返回结果："+jsonObject);
             //对返回结果进行解析，调用getUserInfo
-            if(jsonObject!=null){
+            if(jsonObject!=null&&jsonObject.get("session_key")!=null){
                 String openId=jsonObject.getString("openid");
                 String sessionKey=jsonObject.getString("session_key");
                 String encryptedData = request.getParameter("encryptedData");
                 String iv = request.getParameter("iv");
-                jsonObject = webagService.getUserInfo(encryptedData,sessionKey,iv);
-                logger.info("getUserInfo返回结果："+jsonObject);
+//                jsonObject = webagService.getUserInfo(encryptedData,sessionKey,iv);
+//                logger.info("getUserInfo返回结果："+jsonObject);
+            }else{
+                logger.info("获取用户code失败");
             }
         } catch (Exception e) {
             logger.info("获取用户信息失败");
@@ -68,23 +71,23 @@ public class WebagController extends BaseController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "getUserInfo",method= RequestMethod.POST)
-    @Action(description = "获取用户信息")
-    @ResponseBody
-    public JSONObject getUserInfo(HttpServletRequest request, HttpServletResponse response) {
-        JSONObject jsonObject = null;
-        try {
-            String encryptedData = request.getParameter("encryptedData");
-            String sessionKey = request.getParameter("sessionKey");
-            String iv = request.getParameter("iv");
-            jsonObject = webagService.getUserInfo(encryptedData,sessionKey,iv);
-            logger.info("getUserInfo返回结果："+jsonObject);
-        } catch (Exception e) {
-            logger.info("获取用户信息失败");
-            logger.error(e.getMessage(),e);
-        }
-        return jsonObject;
-    }
+//    @RequestMapping(value = "getUserInfo",method= RequestMethod.POST)
+//    @Action(description = "获取用户信息")
+//    @ResponseBody
+//    public JSONObject getUserInfo(HttpServletRequest request, HttpServletResponse response) {
+//        JSONObject jsonObject = null;
+//        try {
+//            String encryptedData = request.getParameter("encryptedData");
+//            String sessionKey = request.getParameter("sessionKey");
+//            String iv = request.getParameter("iv");
+//            jsonObject = webagService.getUserInfo(encryptedData,sessionKey,iv);
+//            logger.info("getUserInfo返回结果："+jsonObject);
+//        } catch (Exception e) {
+//            logger.info("获取用户信息失败");
+//            logger.error(e.getMessage(),e);
+//        }
+//        return jsonObject;
+//    }
     /**
      * 企业付款
      *
