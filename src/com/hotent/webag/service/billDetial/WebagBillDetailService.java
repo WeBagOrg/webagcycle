@@ -102,7 +102,7 @@ public class WebagBillDetailService extends BaseService<WebagBillDetail>
 	 * @return
 	 * @throws Exception
 	 */
-    public List<WebagBillDetail> getByWechatId(String wechatid) {
-    	return dao.getByWechatId(wechatid);
+    public List<WebagBillDetail> getByWechatId(String wechatid,String size) {
+    	return dao.getByWechatId(wechatid,size);
     }
 }

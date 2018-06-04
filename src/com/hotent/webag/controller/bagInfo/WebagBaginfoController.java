@@ -17,6 +17,7 @@ import com.hotent.webag.model.bindBagInfo.BindBag;
 import com.hotent.webag.service.bagInfo.WebagBaginfoService;
 import com.hotent.webag.service.bindBagInfo.BindBagService;
 import com.hotent.webag.until.GetWeChatOpenId;
+import com.hotent.webag.until.getWechatId;
 import com.hotent.webag.until.produceQRcodeTool;
 import net.sf.json.JSON;
 import org.springframework.stereotype.Controller;
@@ -58,6 +59,7 @@ public class WebagBaginfoController extends BaseController
 	private ProcessRunService processRunService;
 	@Resource
 	private BindBagService bindBagService;
+	com.hotent.webag.until.getWechatId getWechatId = new getWechatId();
 	/**
 	 * 添加或更新回收袋信息。
 	 * @param request
@@ -349,16 +351,7 @@ public class WebagBaginfoController extends BaseController
 		String wxCode = request.getParameter("code");
 		String bagNo = request.getParameter("bagNo");
         Locale locale = new Locale("en", "US");
-		String requestUrl ="https://api.config.qq.com/sns/jscode2session";//请求地址 https://api.weixin.qq.com/sns/jscode2session
-   		Map<String, String> requestUrlParam = new HashMap<String, String>();
-		requestUrlParam.put("appid", "wx9750eb4c1a8b4073");//开发者设置中的appId
-		requestUrlParam.put("secret", "67e39634565bf07bb2b411ff03ef4f7a"); //开发者设置中的appSecret
-		requestUrlParam.put("js_code", wxCode); //小程序调用wx.login返回的code
-		requestUrlParam.put("grant_type", "authorization_code");//默认参数 authorization_code
-		//发送post请求读取调用微信 https://api.weixin.qq.com/sns/jscode2session 接口获取openid用户唯一标识
-		JSONObject jsonObject =JSONObject.fromObject(GetWeChatOpenId.sendPost(requestUrl, requestUrlParam)) ;
-		//将用户微信id和袋子做绑定
-		String userOpenId = jsonObject.get("openId").toString();
+		String userOpenId = getWechatId.getOpenId(wxCode);
 		int res = webagBaginfoService.setuserBindQR(userOpenId,bagNo);
 		//System.out.print(jsonObject.toString());
 		return res;
@@ -396,7 +389,7 @@ public class WebagBaginfoController extends BaseController
 		SysUser sysUser=(SysUser) ContextUtil.getCurrentUser();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		//设置临时文件下载地址
-		String dir=AppConfigUtil.get("zipPath")!=null?AppConfigUtil.get("zipPath"):"C:/zip/";
+		String dir=AppConfigUtil.get("zipPath")!=null?AppConfigUtil.get("zipPath"):"../zip/";
 		String fileDir=dir+sysUser.getUsername()+"_"+df.format(new Date());
 		File file =new File(fileDir);
 		if(!file.exists() || !file.isDirectory()){

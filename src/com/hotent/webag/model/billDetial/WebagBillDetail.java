@@ -264,5 +264,14 @@ public class WebagBillDetail extends BaseModel
 		.append("nickName", this.nickName) 
 		.toString();
 	}
+	//微信显示使用
+	protected String showDate;
 
+	public String getShowDate() {
+		return showDate;
+	}
+
+	public void setShowDate(String showDate) {
+		this.showDate = showDate;
+	}
 }

@@ -8,14 +8,15 @@
 		<result property="province" column="PROVINCE" jdbcType="VARCHAR"/>
 		<result property="city" column="CITY" jdbcType="VARCHAR"/>
 		<result property="createTime" column="CREATETIME" jdbcType="DATE"/>
+		<result property="userImg" column="userImg" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 
 	<sql id="columns">
-		ID,NICKNAME,OPENID,PROVINCE,CITY,CREATETIME
+		ID,NICKNAME,OPENID,PROVINCE,CITY,CREATETIME,userImg
 	</sql>
 	<sql id="wfColumns">
-		ID,NICKNAME,OPENID,PROVINCE,CITY,CREATETIME
+		ID,NICKNAME,OPENID,PROVINCE,CITY,CREATETIME,userImg
 	</sql>
 	
 	<sql id="dynamicWhere">
@@ -33,9 +34,9 @@
 
 	<insert id="add" parameterType="com.hotent.webag.model.wechatInfo.WebagWechatuserInfo">
 		INSERT INTO webag_wechatuser_info
-		(ID,NICKNAME,OPENID,PROVINCE,CITY,CREATETIME)
+		(ID,NICKNAME,OPENID,PROVINCE,CITY,CREATETIME,userImg)
 		VALUES
-		(#{id,jdbcType=NUMERIC}, #{nickName,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE})
+		(#{id,jdbcType=NUMERIC}, #{nickName,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, #{userImg,jdbcType=VARCHAR})
 	</insert>
 	
 	<delete id="delById" parameterType="java.lang.Long">
@@ -50,7 +51,8 @@
 		OPENID=#{openId,jdbcType=VARCHAR},
 		PROVINCE=#{province,jdbcType=VARCHAR},
 		CITY=#{city,jdbcType=VARCHAR},
-		CREATETIME=#{createTime,jdbcType=DATE}
+		CREATETIME=#{createTime,jdbcType=DATE},
+		userImg=#{userImg,jdbcType=VARCHAR}
 		WHERE
 		ID=#{id}
 	</update>
