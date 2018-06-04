@@ -33,7 +33,19 @@ public class WebagWechatuserInfo extends BaseModel
 	 *注册时间
 	 */
 	protected java.util.Date  createTime;
-	
+	/**
+	 * 头像
+	 * */
+	protected String  userImg;
+
+	public String getUserImg() {
+		return userImg;
+	}
+
+	public void setUserImg(String userImg) {
+		this.userImg = userImg;
+	}
+
 	public Long getId() {
 		return id;
 	}
