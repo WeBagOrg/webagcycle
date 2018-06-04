@@ -1,7 +1,9 @@
 
 package com.hotent.webag.dao.billDetial;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.hotent.webag.model.billDetial.WebagBillDetail;
 import org.springframework.stereotype.Repository;
@@ -20,7 +22,10 @@ public class WebagBillDetailDao extends BaseDao<WebagBillDetail>
 		return WebagBillDetail.class;
 	}
 
-    public List<WebagBillDetail> getByWechatId(String wechatid) {
-		return this.getBySqlKey("getByWechatId","wechatid");
+    public List<WebagBillDetail> getByWechatId(String wechatid,String size) {
+		Map map = new HashMap();
+		map.put("wechatid",wechatid);
+		map.put("pageSize",Long.valueOf(size));
+		return this.getBySqlKey("getByWechatId",map);
     }
 }

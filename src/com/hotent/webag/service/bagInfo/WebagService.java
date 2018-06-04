@@ -44,10 +44,13 @@ public class WebagService {
         String requestUrl = resource.getString("url");
         Map<String, String> requestUrlParam = new HashMap<String, String>();
         requestUrlParam.put("appid", resource.getString("appId"));
+        log.info("appid："+resource.getString("appId"));
         requestUrlParam.put("secret", resource.getString("appSecret"));
+        log.info("secret："+resource.getString("appSecret"));
         requestUrlParam.put("js_code", code);
+        log.info("js_code："+code);
         requestUrlParam.put("grant_type", resource.getString("grant_type")); //默认参数
-
+        log.info("grant_type："+resource.getString("grant_type"));
         //发送post请求获取openid
         JSONObject jsonObject = JSON.parseObject(GetWeChatOpenId.sendPost(requestUrl, requestUrlParam));
         return jsonObject;

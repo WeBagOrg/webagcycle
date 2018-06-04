@@ -2,6 +2,8 @@
 
 package com.hotent.webag.controller.billDetial;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -11,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hotent.webag.model.billDetial.WebagBillDetail;
 import com.hotent.webag.service.billDetial.WebagBillDetailService;
+import com.hotent.webag.until.GetWeChatOpenId;
+import com.hotent.webag.until.getWechatId;
+import install.util.JsonUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.hotent.platform.annotion.Action;
@@ -39,7 +44,7 @@ public class WebagBillDetailController extends BaseController
 {
 	@Resource
 	private WebagBillDetailService webagBillDetailService;
-	
+	getWechatId getWechatId = new getWechatId();
 	/**
 	 * 添加或更新用户流水明细表。
 	 * @param request
@@ -71,7 +76,6 @@ public class WebagBillDetailController extends BaseController
 	 * 取得用户流水明细表分页列表
 	 * @param request
 	 * @param response
-	 * @param page
 	 * @return
 	 * @throws Exception
 	 */
@@ -150,14 +154,22 @@ public class WebagBillDetailController extends BaseController
 	 * @throws Exception
 	 */
 	@RequestMapping("getByWechatId")
-	@ResponseBody
 	@Action(description="查看用户流水明细表明细")
-	public JSONObject getByWechatId(HttpServletRequest request, HttpServletResponse response) throws Exception
+	public void getByWechatId(HttpServletRequest request, HttpServletResponse response) throws Exception
 	{
-		String wechatid=RequestUtil.getString(request,"wechatid");
-		List<WebagBillDetail> webagBillDetails=webagBillDetailService.getByWechatId(wechatid);
-		JSONObject jsonObject = JSONObject.fromObject(webagBillDetails);
-		return jsonObject;
+		SimpleDateFormat myFmt=new SimpleDateFormat("yyyy-MM-dd");
+		String wxCode = request.getParameter("code");
+		String size = request.getParameter("length");
+		//String userOpenId = getWechatId.getOpenId(wxCode);
+		//String wechatid=RequestUtil.getString(request,"wechatid");
+		List<WebagBillDetail> webagBillDetails=webagBillDetailService.getByWechatId("1",size);
+		for (WebagBillDetail webagBillDetail:webagBillDetails) {
+			String dateStr = myFmt.format(webagBillDetail.getCreatTime());
+			System.out.print(dateStr);
+			webagBillDetail.setShowDate(dateStr);
+		}
+
+		writeResultMessage(response.getWriter(), JsonUtils.toJson(webagBillDetails), ResultMessage.Success);
 	}
 	
 }

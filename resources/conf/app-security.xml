@@ -130,13 +130,12 @@
 				<value>/webag/appletPay.ht</value>
 				<value>/webag/billDetail/webagBillDetail/getByWechatId.ht</value>
 				<value>/webag/bagInfo/webagBaginfo/getbindInfo.ht</value>
-				<value>
-					/webag/weighingLog/webagWeighingLog/saveWeighingLog.ht
-				</value>
-				<value>
-					/webag/wasteType/webagWasteType/getAllWasteTypeApp.ht
-				</value>
+				<value>/webag/weighingLog/webagWeighingLog/saveWeighingLog.ht</value>
+				<!--<value>/webag/weighingLog/webagWeighingLog/saveWeighingLog.ht</value>-->
+				<value>/webag/wasteType/webagWasteType/getAllWasteTypeApp.ht</value>
+				<!--<value>/webag/wasteType/webagWasteType/getAllWasteTypeApp.ht</value>-->
 			</set>
+
 		</property>
 	</bean>
 </beans>
