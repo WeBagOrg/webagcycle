@@ -53,8 +53,8 @@ public class WebagController extends BaseController {
                 String sessionKey=jsonObject.getString("session_key");
                 String encryptedData = request.getParameter("encryptedData");
                 String iv = request.getParameter("iv");
-//                jsonObject = webagService.getUserInfo(encryptedData,sessionKey,iv);
-//                logger.info("getUserInfo返回结果："+jsonObject);
+                jsonObject = webagService.getUserInfo(encryptedData,sessionKey,iv);
+                logger.info("getUserInfo返回结果："+jsonObject);
             }else{
                 logger.info("获取用户code失败");
             }

@@ -2,30 +2,24 @@
 
 package com.hotent.webag.controller.weChatInfo;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import install.util.JsonUtils;
+import net.sf.json.JSONObject;
 import com.hotent.webag.model.wechatInfo.WebagWechatuserInfo;
 import com.hotent.webag.service.weChatInfo.WebagWechatuserInfoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.hotent.platform.annotion.Action;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import com.hotent.core.util.UniqueIdUtil;
 import com.hotent.core.web.util.RequestUtil;
 import com.hotent.core.web.controller.BaseController;
-import com.hotent.core.util.BeanUtils;
 import com.hotent.core.web.query.QueryFilter;
-import com.hotent.core.page.PageList;
-import com.hotent.platform.model.system.SysUser;
-import org.apache.commons.lang.exception.ExceptionUtils;
-import com.hotent.core.bpm.util.BpmUtil;
-import net.sf.json.JSONObject;
-import com.hotent.core.util.MapUtil;
 
 
 import com.hotent.core.web.ResultMessage;
@@ -38,6 +32,42 @@ public class WebagWechatuserInfoController extends BaseController
 {
 	@Resource
 	private WebagWechatuserInfoService webagWechatuserInfoService;
+
+	/**
+	 * 获取用户sessionkey和openid
+	 *
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "getSessionKeyOropenid",method= RequestMethod.POST)
+	@Action(description = "获取用户sessionkey和openid")
+	public void getSessionKeyOropenid(HttpServletRequest request, HttpServletResponse response) throws Exception
+	{
+		String resultMsg=null;
+		JSONObject jsonObject = null;
+		try {
+			String code = request.getParameter("code");
+			jsonObject = webagWechatuserInfoService.getSessionKeyOropenid(code);
+			System.out.println(jsonObject);
+			logger.info("getSessionKeyOropenid返回结果："+jsonObject);
+			//对返回结果进行解析，调用getUserInfo
+//			if(jsonObject!=null&&jsonObject.get("session_key")!=null){
+//				String openId=jsonObject.getString("openid");
+//				String sessionKey=jsonObject.getString("session_key");
+//				String encryptedData = request.getParameter("encryptedData");
+//				String iv = request.getParameter("iv");
+//				jsonObject = webagWechatuserInfoService.getUserInfo(encryptedData,sessionKey,iv);
+//				logger.info("getUserInfo返回结果："+jsonObject);
+//			}else{
+//				logger.info("获取用户code失败");
+//			}
+			writeResultMessage(response.getWriter(), JsonUtils.toJson(jsonObject), ResultMessage.Success);
+		} catch (Exception e) {
+			logger.info("获取用户信息失败");
+			writeResultMessage(response.getWriter(),resultMsg+","+e.getMessage(),ResultMessage.Fail);
+		}
+	}
 	
 	/**
 	 * 添加或更新微信用户表。
@@ -70,7 +100,6 @@ public class WebagWechatuserInfoController extends BaseController
 	 * 取得微信用户表分页列表
 	 * @param request
 	 * @param response
-	 * @param page
 	 * @return
 	 * @throws Exception
 	 */
@@ -109,7 +138,6 @@ public class WebagWechatuserInfoController extends BaseController
 	/**
 	 * 	编辑微信用户表
 	 * @param request
-	 * @param response
 	 * @throws Exception
 	 */
 	@RequestMapping("edit")
@@ -140,5 +168,6 @@ public class WebagWechatuserInfoController extends BaseController
 		WebagWechatuserInfo webagWechatuserInfo=webagWechatuserInfoService.getById(id);
 		return getAutoView().addObject("webagWechatuserInfo", webagWechatuserInfo);
 	}
+
 	
 }
