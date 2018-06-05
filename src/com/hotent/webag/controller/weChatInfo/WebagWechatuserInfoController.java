@@ -40,7 +40,7 @@ public class WebagWechatuserInfoController extends BaseController
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "getSessionKeyOropenid",method= RequestMethod.POST)
+	@RequestMapping(value = "getSessionKeyOropenid")
 	@Action(description = "获取用户sessionkey和openid")
 	public void getSessionKeyOropenid(HttpServletRequest request, HttpServletResponse response) throws Exception
 	{

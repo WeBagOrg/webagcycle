@@ -133,6 +133,7 @@
 				<value>/webag/weighingLog/webagWeighingLog/saveWeighingLog.ht</value>
 				<!--<value>/webag/weighingLog/webagWeighingLog/saveWeighingLog.ht</value>-->
 				<value>/webag/wasteType/webagWasteType/getAllWasteTypeApp.ht</value>
+				<value>/webag/wechatuserInfo/getSessionKeyOropenid.ht</value>
 				<!--<value>/webag/wasteType/webagWasteType/getAllWasteTypeApp.ht</value>-->
 			</set>
 
