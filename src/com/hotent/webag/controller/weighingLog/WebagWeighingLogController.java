@@ -8,6 +8,12 @@ import java.util.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.hotent.webag.model.billDetial.WebagBillDetail;
+import com.hotent.webag.model.userAccount.WebagUserAccount;
+import com.hotent.webag.service.billDetial.WebagBillDetailService;
+import com.hotent.webag.service.bindBagInfo.BindBagService;
+import com.hotent.webag.service.userAccount.WebagUserAccountService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.hotent.platform.annotion.Action;
@@ -39,7 +45,12 @@ public class WebagWeighingLogController extends BaseController
 	private WebagWeighingLogService webagWeighingLogService;
 	@Resource
 	private IdentityService identityService;
-
+	@Resource
+	private BindBagService bindBagService;
+	@Resource
+	private WebagBillDetailService webagBillDetailService;
+	@Resource
+	private WebagUserAccountService webagUserAccountService;
 	@RequestMapping("test")
     @Action(description = "测试")
 	public void test() {
@@ -61,13 +72,14 @@ public class WebagWeighingLogController extends BaseController
 		String resultMsg=null;
 		try{
 			String wasteTypeNo = request.getParameter("wasteTypeNo");
-			String bagNo = request.getParameter("bagNo");
+			String bagNoUrl = request.getParameter("bagNo");
 			String thePriceOfTheTime = request.getParameter("thePriceOfTheTime");
 			String weight = request.getParameter("weight");
 			String amountOfRebate = request.getParameter("amountOfRebate");
-
+			//取得袋子编号
+			String[] bagNo = bagNoUrl.split("=");
 			webagWeighingLog.setWasteTypeNo(wasteTypeNo);
-			webagWeighingLog.setBagNo(bagNo);
+			webagWeighingLog.setBagNo(bagNo[1]);
 			webagWeighingLog.setThePriceOfTheTime(thePriceOfTheTime);
 			webagWeighingLog.setWeight(weight);
 			webagWeighingLog.setAmountOfRebate(amountOfRebate);
@@ -78,6 +90,33 @@ public class WebagWeighingLogController extends BaseController
 			String dateString = formatter.format(currentTime);
 			webagWeighingLog.setCreateDate(formatter.parse(dateString, pos));
 			webagWeighingLogService.save(webagWeighingLog);
+
+			//流水明细表添加信息
+			WebagBillDetail webagBillDetail = new WebagBillDetail();
+			webagBillDetail.setBagNo(bagNo[1]);
+			webagBillDetail.setTotalPrice(Long.valueOf(amountOfRebate));
+			webagBillDetail.setWasteType(wasteTypeNo);
+			webagBillDetail.setUnitPrice(Long.valueOf(thePriceOfTheTime));
+			webagBillDetail.setWeight(Long.valueOf(weight));
+			webagBillDetail.setCreatTime(currentTime);
+			//根据bagNo获取被绑的用户id
+			String weChatId = bindBagService.getByBagNo(bagNo[1]);
+			webagBillDetail.setUserWeChatID(weChatId);
+			webagBillDetailService.save(webagBillDetail);
+			//向公众号发消息
+			//更新用户余额
+			WebagUserAccount webagUserAccount = webagUserAccountService.getByWeChatId(weChatId);
+			if (webagUserAccount==null){
+				webagUserAccount = new WebagUserAccount();
+				webagUserAccount.setAccount(Long.valueOf(amountOfRebate));
+				webagUserAccount.setUserWechatId(weChatId);
+				webagUserAccountService.save(webagUserAccount);
+			}else {
+				Long newAccount = webagUserAccount.getAccount()+Long.valueOf(amountOfRebate);
+				webagUserAccount.setAccount(newAccount);
+				webagUserAccountService.updateByWechatId(webagUserAccount);
+			}
+
 			writeResultMessage(response.getWriter(),"",ResultMessage.Success);
 		}catch(Exception e){
 			writeResultMessage(response.getWriter(),"",ResultMessage.Fail);

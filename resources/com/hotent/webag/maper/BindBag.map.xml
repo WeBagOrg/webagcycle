@@ -67,8 +67,18 @@
 		order by bagNo desc
 		</if>
 	</select>
-	
-	
-	
+
+	<select id="getByWechatId"  resultMap="BindBaginfo">
+		select * from (SELECT <include refid="columns"/>
+		FROM webag_userbindbag
+		WHERE
+		userOpenId=#{wechatid})detail LIMIT #{pageSize}
+	</select>
+	<select id="getByBagNo"  resultMap="BindBaginfo">
+		select * from (SELECT <include refid="columns"/>
+		FROM webag_userbindbag
+		WHERE
+		bagNo=#{bagNo})and bindStauts=1
+	</select>
 
 </mapper>

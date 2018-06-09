@@ -59,7 +59,7 @@
   </tr>
   <tr>
       <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">二维码:</td>
-      <td class="formInput" style="width:80%;"><img src="${webagBaginfo.QRUrl}" width="200px" height="200px"/></td>
+      <td class="formInput" style="width:80%;"><img src="http://www.webagcycle.com/QRcode/${webagBaginfo.QRUrl}" width="200px" height="200px"/></td>
   </tr>
  </tbody>
 </table>

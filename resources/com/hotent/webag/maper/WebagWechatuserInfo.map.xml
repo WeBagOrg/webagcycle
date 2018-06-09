@@ -76,7 +76,12 @@
 		order by ID desc
 		</if>
 	</select>
-	
-	
+
+	<select id="isExitUser"  resultMap="WebagWechatuserInfo">
+		SELECT <include refid="columns"/>
+		FROM webag_wechatuser_info
+		WHERE
+		OPENID=#{openid}
+	</select>
 	
 </mapper>

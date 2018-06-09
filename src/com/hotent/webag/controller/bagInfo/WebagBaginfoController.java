@@ -19,10 +19,12 @@ import com.hotent.webag.service.bindBagInfo.BindBagService;
 import com.hotent.webag.until.GetWeChatOpenId;
 import com.hotent.webag.until.getWechatId;
 import com.hotent.webag.until.produceQRcodeTool;
+import install.util.JsonUtils;
 import net.sf.json.JSON;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.hotent.platform.annotion.Action;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.hotent.core.web.util.RequestUtil;
@@ -313,10 +315,10 @@ public class WebagBaginfoController extends BaseController
 		//根据id获取回收袋信息
 		for(int i=0; i<lAryId.length;i++){
 			WebagBaginfo webagBaginfo = webagBaginfoService.getById(lAryId[i]);
-			File logoFile = new File("../usr/local/webag/logo.png");
-			String fileName = "../usr/local/webag"+File.separator+webagBaginfo.getBagNo()+".png";
+			File logoFile = new File("D:\\webag/logo.png");
+			String fileName = "D:\\webag"+File.separator+webagBaginfo.getBagNo()+".png";
 			File QrCodeFile = new File(fileName);
-			String url = "https://www.webagcycle.com/webagcycle_war/webag/bagInfo/webagBaginfo/userBindQR.ht?bagNo="+webagBaginfo.getBagNo();
+			String url = "https://www.webagcycle.com/webag/bagInfo/webagBaginfo/userBindQR.ht?bagNo="+webagBaginfo.getBagNo();
 			String note = "NO."+webagBaginfo.getBagNo();
 
 				try {
@@ -343,18 +345,20 @@ public class WebagBaginfoController extends BaseController
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("userBindQR")
-	@ResponseBody
+	@RequestMapping(value ="userBindQR",method= RequestMethod.POST)
 	@Action(description="用户扫码绑定二维码")
-	public Integer userBindQR(HttpServletRequest request, HttpServletResponse response) throws Exception
+	public void userBindQR(HttpServletRequest request, HttpServletResponse response) throws Exception
 	{
+		System.out.print("===========================================================================findme===========");
 		String wxCode = request.getParameter("code");
 		String bagNo = request.getParameter("bagNo");
-        Locale locale = new Locale("en", "US");
-		String userOpenId = getWechatId.getOpenId(wxCode);
-		int res = webagBaginfoService.setuserBindQR(userOpenId,bagNo);
+		System.out.print("===========================================================================findme==========="+wxCode+bagNo);
+       int res = webagBaginfoService.setuserBindQR(wxCode,bagNo);
+		System.out.print("===========================================================================findme==========="+res);
+		Map map = new HashMap();
+		map.put("res",res);
 		//System.out.print(jsonObject.toString());
-		return res;
+		writeResultMessage(response.getWriter(), JsonUtils.toJson(map), ResultMessage.Success);
 		}
     /**
      * 取得二维码信息分页列表
@@ -389,7 +393,7 @@ public class WebagBaginfoController extends BaseController
 		SysUser sysUser=(SysUser) ContextUtil.getCurrentUser();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		//设置临时文件下载地址
-		String dir=AppConfigUtil.get("zipPath")!=null?AppConfigUtil.get("zipPath"):"../zip/";
+		String dir=AppConfigUtil.get("zipPath")!=null?AppConfigUtil.get("zipPath"):"/zip/";
 		String fileDir=dir+sysUser.getUsername()+"_"+df.format(new Date());
 		File file =new File(fileDir);
 		if(!file.exists() || !file.isDirectory()){
@@ -409,13 +413,19 @@ public class WebagBaginfoController extends BaseController
 	 * @throws Exception
 	 */
 	@RequestMapping("getbindInfo")
-	@ResponseBody
 	@Action(description="取得回收袋绑定信息")
-	public JSONObject getbindInfo(HttpServletRequest request, HttpServletResponse response) throws Exception
+	public void getbindInfo(HttpServletRequest request, HttpServletResponse response) throws Exception
 	{
+		SimpleDateFormat myFmt=new SimpleDateFormat("yyyy-MM-dd");
 		String wechatId=RequestUtil.getString(request,"wechatId");
-		List<BindBag> list = bindBagService.getByWechatId(wechatId);
-		JSONObject jsonObject = JSONObject.fromObject(list);
-		return jsonObject;
+		String size = request.getParameter("length");
+		List<BindBag> list = bindBagService.getByWechatId(wechatId,size);
+		for (BindBag bindBag:list) {
+			String dateStr = myFmt.format(bindBag.getBindStauts());
+			String dateStr1 = myFmt.format(bindBag.getUnBindTime());
+			bindBag.setShowBindTime(dateStr);
+			bindBag.setShowUnBindTime(dateStr1);
+		}
+		writeResultMessage(response.getWriter(), JsonUtils.toJson(list), ResultMessage.Success);
 	}
 }

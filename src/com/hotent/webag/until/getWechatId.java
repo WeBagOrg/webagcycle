@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class getWechatId {
     public String getOpenId(String code){
-        String requestUrl ="https://api.config.qq.com/sns/jscode2session";//请求地址 https://api.weixin.qq.com/sns/jscode2session
+        String requestUrl ="https://api.weixin.qq.com/sns/jscode2session";//请求地址 https://api.weixin.qq.com/sns/jscode2session
         Map<String, String> requestUrlParam = new HashMap<String, String>();
         requestUrlParam.put("appid", "wx9750eb4c1a8b4073");//开发者设置中的appId
         requestUrlParam.put("secret", "67e39634565bf07bb2b411ff03ef4f7a"); //开发者设置中的appSecret

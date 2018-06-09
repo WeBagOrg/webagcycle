@@ -2,6 +2,7 @@
 
 package com.hotent.webag.controller.userAccount;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -9,8 +10,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hotent.webag.model.bindBagInfo.BindBag;
 import com.hotent.webag.model.userAccount.WebagUserAccount;
 import com.hotent.webag.service.userAccount.WebagUserAccountService;
+import install.util.JsonUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.hotent.platform.annotion.Action;
@@ -109,7 +112,6 @@ public class WebagUserAccountController extends BaseController
 	/**
 	 * 	编辑用户余额表
 	 * @param request
-	 * @param response
 	 * @throws Exception
 	 */
 	@RequestMapping("edit")
@@ -140,5 +142,26 @@ public class WebagUserAccountController extends BaseController
 		WebagUserAccount webagUserAccount=webagUserAccountService.getById(id);
 		return getAutoView().addObject("webagUserAccount", webagUserAccount);
 	}
-	
+	/**
+	 * 取得用户的余额(微信)
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("getAccountByWechat")
+	@Action(description="取得用户的余额")
+	public void getbindInfo(HttpServletRequest request, HttpServletResponse response) throws Exception
+	{
+
+		String wechatId=RequestUtil.getString(request,"wechatId");
+		List<WebagUserAccount> list = webagUserAccountService.getAccountByWechat(wechatId);
+		Map map = new HashMap();
+		if(list.isEmpty()){
+			map.put("account",0.0);
+		}else{
+			map.put("account",list.get(0).getAccount());
+		}
+		writeResultMessage(response.getWriter(), JsonUtils.toJson(map), ResultMessage.Success);
+	}
 }

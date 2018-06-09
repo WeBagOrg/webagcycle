@@ -13,7 +13,9 @@ import javax.crypto.spec.SecretKeySpec;
 
 import com.alibaba.fastjson.JSON;
 import com.hotent.webag.dao.weChatInfo.WebagWechatuserInfoDao;
+import com.hotent.webag.model.userAccount.WebagUserAccount;
 import com.hotent.webag.model.wechatInfo.WebagWechatuserInfo;
+import com.hotent.webag.service.userAccount.WebagUserAccountService;
 import com.hotent.webag.until.GetWeChatOpenId;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.codehaus.xfire.util.Base64;
@@ -40,7 +42,8 @@ public class WebagWechatuserInfoService extends BaseService<WebagWechatuserInfo>
 
 	@Resource
 	private WebagWechatuserInfoDao dao;
-	
+	@Resource
+	private WebagUserAccountService webagUserAccountService;
 	public WebagWechatuserInfoService()
 	{
 	}
@@ -66,9 +69,20 @@ public class WebagWechatuserInfoService extends BaseService<WebagWechatuserInfo>
 		JSONObject jsonObject = JSONObject.fromObject(GetWeChatOpenId.sendPost(requestUrl, requestUrlParam));
 		//保存openid
 		WebagWechatuserInfo userInfo=new WebagWechatuserInfo();
-		userInfo.setOpenId(jsonObject.getString("openid"));
-		userInfo.setCreateTime(new Date());
-		this.save(userInfo);
+		//判断用户是否存在
+		List<WebagWechatuserInfo> list = dao.isExitUser(jsonObject.getString("openid"));
+		if(list.isEmpty()){
+			userInfo.setOpenId(jsonObject.getString("openid"));
+			userInfo.setCreateTime(new Date());
+			this.save(userInfo);
+			//创建用户账户
+			WebagUserAccount account = new WebagUserAccount();
+			account.setId(UniqueIdUtil.genId());
+			account.setUserWechatId(jsonObject.getString("openid"));
+			account.setAccount(0L);
+			webagUserAccountService.save(account);
+		}
+
 		return jsonObject;
 	}
 

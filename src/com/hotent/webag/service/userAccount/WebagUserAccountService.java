@@ -95,4 +95,22 @@ public class WebagUserAccountService extends BaseService<WebagUserAccount>
 		   }
 		}
 	}
+	//更新用户余额
+    public WebagUserAccount getByWeChatId(String weChatId) {
+		return dao.getByWeChatId(weChatId);
+    }
+
+	public void updateByWechatId(WebagUserAccount webagUserAccount) {
+		dao.updateByWechatId(webagUserAccount);
+	}
+	/**
+	 * 取得用户的余额(微信)
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public List<WebagUserAccount> getAccountByWechat(String wechatId) {
+		return dao.getAccountByWechat(wechatId);
+	}
 }

@@ -162,10 +162,9 @@ public class WebagBillDetailController extends BaseController
 		String size = request.getParameter("length");
 		//String userOpenId = getWechatId.getOpenId(wxCode);
 		//String wechatid=RequestUtil.getString(request,"wechatid");
-		List<WebagBillDetail> webagBillDetails=webagBillDetailService.getByWechatId("1",size);
+		List<WebagBillDetail> webagBillDetails=webagBillDetailService.getByWechatId(wxCode,size);
 		for (WebagBillDetail webagBillDetail:webagBillDetails) {
 			String dateStr = myFmt.format(webagBillDetail.getCreatTime());
-			System.out.print(dateStr);
 			webagBillDetail.setShowDate(dateStr);
 		}
 

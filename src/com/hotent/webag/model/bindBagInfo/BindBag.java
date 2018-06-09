@@ -15,7 +15,7 @@ public class BindBag extends BaseModel
 	/*
 	 *用户微信openID
 	 */
-	protected String  userWeChatID;
+	protected String  userOpenId;
 	/**
 	 *回收袋编号
 	 */
@@ -33,6 +33,33 @@ public class BindBag extends BaseModel
 	 */
 	protected   Integer bindStauts;
 
+	/**
+	 * 微信展示绑定时间
+	 * @return
+	 */
+	protected String showBindTime;
+	/**
+	 * 微信展示解绑时间
+	 * @return
+	 */
+	protected String showUnBindTime;
+
+	public String getShowBindTime() {
+		return showBindTime;
+	}
+
+	public void setShowBindTime(String showBindTime) {
+		this.showBindTime = showBindTime;
+	}
+
+	public String getShowUnBindTime() {
+		return showUnBindTime;
+	}
+
+	public void setShowUnBindTime(String showUnBindTime) {
+		this.showUnBindTime = showUnBindTime;
+	}
+
 	public Integer getBindStauts() {
 		return bindStauts;
 	}
@@ -41,9 +68,9 @@ public class BindBag extends BaseModel
 		this.bindStauts = bindStauts;
 	}
 
-	public void setUserWeChatID(String userWeChatID)
+	public void setUserWeChatID(String userOpenId)
 	{
-		this.userWeChatID = userWeChatID;
+		this.userOpenId = userOpenId;
 	}
 	/**
 	 * 返回 用户微信openID
@@ -51,7 +78,7 @@ public class BindBag extends BaseModel
 	 */
 	public String getUserWeChatID() 
 	{
-		return this.userWeChatID;
+		return this.userOpenId;
 	}
 	public void setBagNo(String bagNo) 
 	{

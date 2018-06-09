@@ -114,32 +114,34 @@
   </tr>
   <tr>
    <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">袋子编号:</td>
-   <td class="formInput" style="width:80%;"><span name="editable-input" style="display:inline-block;" isflag="tableflag"><input name="m:webagBaginfo:bagNo" lablename="袋子编号" class="inputText" validate="{maxlength:54}" isflag="tableflag" type="text" value="${webagBaginfo.bagNo}" /></span></td>
+   <td class="formInput" style="width:80%;"><span name="editable-input" style="display:inline-block;" isflag="tableflag"><input name="m:webagBaginfo:bagNo" lablename="袋子编号" class="inputText" validate="{maxlength:54}" isflag="tableflag" type="text" value="${webagBaginfo.bagNo}" readonly="readonly"/></span></td>
   </tr>
   <tr>
    <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">添加时间:</td>
-   <td class="formInput" style="width:80%;"><input name="m:webagBaginfo:createDate" class="Wdate" displaydate="1" datefmt="yyyy-MM-dd" validate="{empty:false}" type="text" value="<fmt:formatDate value='${webagBaginfo.createDate}' pattern='yyyy-MM-dd'/>" /></td>
+   <td class="formInput" style="width:80%;"><input readonly="readonly" name="m:webagBaginfo:createDate" class="Wdate" displaydate="1" datefmt="yyyy-MM-dd" validate="{empty:false}" type="text" value="<fmt:formatDate value='${webagBaginfo.createDate}' pattern='yyyy-MM-dd' />" /></td>
   </tr>
   <tr>
    <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">创建者:</td>
-   <td class="formInput" style="width:80%;"><span name="editable-input" style="display:inline-block;" isflag="tableflag"><input name="m:webagBaginfo:creatorName" lablename="创建者" class="inputText" validate="{maxlength:600}" isflag="tableflag" type="text" value="${webagBaginfo.creatorName}" /></span></td>
+   <td class="formInput" style="width:80%;"><span name="editable-input" style="display:inline-block;" isflag="tableflag"><input readonly="readonly" name="m:webagBaginfo:creatorName" lablename="创建者" class="inputText" validate="{maxlength:600}" isflag="tableflag" type="text" value="${webagBaginfo.creatorName}" /></span></td>
   </tr>
   <tr>
    <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">创建者id:</td>
-   <td class="formInput" style="width:80%;"><input name="m:webagBaginfo:creatorId" showtype="{"coinValue":"","isShowComdify":0,"decimalValue":0}" validate="{number:true,maxIntLen:18,maxDecimalLen:0}" type="text" value="${webagBaginfo.creatorId}" /></td>
+   <td class="formInput" style="width:80%;"><input readonly="readonly" name="m:webagBaginfo:creatorId" showtype="{"coinValue":"","isShowComdify":0,"decimalValue":0}" validate="{number:true,maxIntLen:18,maxDecimalLen:0}" type="text" value="${webagBaginfo.creatorId}" /></td>
   </tr>
   <tr>
    <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">使用次数:</td>
-   <td class="formInput" style="width:80%;"><input name="m:webagBaginfo:useTime" showtype="validate="{number:true,maxIntLen:19,maxDecimalLen:0}"" type="text" value="${webagBaginfo.useTime}" /></td>
+   <td class="formInput" style="width:80%;"><input readonly="readonly" name="m:webagBaginfo:useTime" showtype="validate="{number:true,maxIntLen:19,maxDecimalLen:0}"" type="text" value="${webagBaginfo.useTime}" /></td>
   </tr>
   <tr>
    <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">袋子是否启用:</td>
    <td class="formInput" style="width:80%;"><label><input name="m:webagBaginfo:bagStatus" value="是" lablename="袋子是否启用" validate="{}" type="radio" data="${webagBaginfo.bagStatus}" />是</label><label><input name="m:webagBaginfo:bagStatus" value="否" lablename="袋子是否启用" validate="{}" type="radio" data="${webagBaginfo.bagStatus}" />否</label></td>
   </tr>
+  <c:if test="${not empty webagBaginfo.id}">
   <tr>
 	  <td style="width:20%;" class="formTitle" nowrap="nowarp" align="right">二维码:</td>
-	  <td class="formInput" style="width:80%;"><img src="${webagBaginfo.QRUrl}" width="200px" height="200px"/></td>
+	  <td class="formInput" style="width:80%;"><img src="file:///${webagBaginfo.QRUrl}" width="200px" height="200px"/></td>
   </tr>
+  </c:if>
  </tbody>
 </table>
 			</div>

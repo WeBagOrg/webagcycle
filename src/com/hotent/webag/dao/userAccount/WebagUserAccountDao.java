@@ -21,4 +21,21 @@ public class WebagUserAccountDao extends BaseDao<WebagUserAccount>
 		return WebagUserAccount.class;
 	}
 
+    public WebagUserAccount getByWeChatId(String weChatId) {
+		List<WebagUserAccount> list = getBySqlKey("getByWeChatId",weChatId);
+		if (list.isEmpty()){
+			return null;
+		}else{
+			return list.get(0);
+		}
+
+    }
+
+	public void updateByWechatId(WebagUserAccount webagUserAccount) {
+		update("updateByWechatId",webagUserAccount);
+	}
+
+	public List<WebagUserAccount> getAccountByWechat(String wechatId) {
+		return getBySqlKey("getByWeChatId",wechatId);
+	}
 }

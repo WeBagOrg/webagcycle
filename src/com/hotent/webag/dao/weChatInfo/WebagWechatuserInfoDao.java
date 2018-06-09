@@ -20,5 +20,8 @@ public class WebagWechatuserInfoDao extends BaseDao<WebagWechatuserInfo>
 	{
 		return WebagWechatuserInfo.class;
 	}
-
+	//判断用户是否存在
+    public List<WebagWechatuserInfo> isExitUser(String openid) {
+		return getBySqlKey("isExitUser",openid);
+    }
 }

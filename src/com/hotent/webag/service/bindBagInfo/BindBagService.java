@@ -54,7 +54,16 @@ public class BindBagService extends BaseService<BindBag>
 	 * @return
 	 * @throws Exception
 	 */
-	public List<BindBag> getByWechatId(String wechatId) {
-		return dao.getByWechatId(wechatId);
+	public List<BindBag> getByWechatId(String wechatId,String size) {
+		return dao.getByWechatId(wechatId,size);
 	}
+
+	/**
+	 * 根据袋子编号获取被绑定用户信息
+	 * @param bagNo
+	 * @return
+	 */
+    public String getByBagNo(String bagNo) {
+    	return dao.getByBagNo(bagNo);
+    }
 }
