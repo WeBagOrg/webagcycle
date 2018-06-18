@@ -116,18 +116,17 @@ public class WebagService {
 
     /**
      * 企业付款
-     * @param userId
+     * @param openId
      * @param amount
      * @param ip
      * @return
      * @throws Exception
      *
      */
-    public Map<String, String> appletPay(String userId, Integer amount,String ip) throws Exception{
+    public Map<String, String> appletPay(String openId, Integer amount,String ip) throws Exception{
 
         AppletPayVo appletPayVo=new AppletPayVo();
         //根据userId获取openid
-        String openId="";
         appletPayVo.setOpenid(openId);
         appletPayVo.setAmount(amount.intValue());
         appletPayVo.setSpbill_create_ip(ip);
@@ -140,13 +139,18 @@ public class WebagService {
 
         String sign = PayUtil.createOrderSign(appletPayVo);
         appletPayVo.setSign(sign);
-
         XMLUtil xmlUtil=new XMLUtil();
         xmlUtil.xstream().alias("xml", appletPayVo.getClass());
         String xml = xmlUtil.xstream().toXML(appletPayVo);
         String response = PayUtil.ssl(resource.getString("appletPayUrl"),xml);
         Map<String, String> responseMap = xmlUtil.parseXml(response);
+        System.out.println(responseMap);
         return responseMap;
+    }
+
+    public static void main(String[] args) throws  Exception{
+        WebagService webagService=new WebagService();
+        webagService.appletPay("o3Vz949ya8mK5WHoReAMJsZK01Pw",1,"192.168.1.105");
     }
 
     /**

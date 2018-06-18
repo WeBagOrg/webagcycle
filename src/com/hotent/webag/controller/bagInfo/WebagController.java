@@ -2,10 +2,12 @@ package com.hotent.webag.controller.bagInfo;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.hotent.core.web.ResultMessage;
 import com.hotent.core.web.controller.BaseController;
 import com.hotent.platform.annotion.Action;
 import com.hotent.webag.service.bagInfo.WebagService;
 import com.hotent.webag.until.IpAddressUtil;
+import install.util.JsonUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -95,22 +97,23 @@ public class WebagController extends BaseController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "appletPay",method= RequestMethod.POST)
+    @RequestMapping(value = "appletPay")
     @Action(description = "企业付款")
-    @ResponseBody
-    public JSONObject appletPay(HttpServletRequest request, HttpServletResponse response) {
+    public void appletPay(HttpServletRequest request, HttpServletResponse response) throws  Exception{
         JSONObject jsonObject = null;
+        String resultMsg=null;
         try {
-            String userId = request.getParameter("userId");//用户ID，
+            resultMsg="企业付款";
+            String userId = request.getParameter("openId");//用户ID，
             Integer amount = Integer.parseInt(request.getParameter("amount"));//金额，以分为单位
             Map<String, String> map = webagService.appletPay(userId,amount, IpAddressUtil.getIpAddress(request));
-            logger.info("getUserInfo返回结果："+map);
+            logger.info("appletPay返回结果："+map);
             jsonObject= JSON.parseObject(map.toString());
             logger.info("转换之后的json返回："+jsonObject);
+            writeResultMessage(response.getWriter(), JsonUtils.toJson(jsonObject), ResultMessage.Success);
         } catch (Exception e) {
             logger.info("获取用户信息失败");
-            logger.error(e.getMessage(),e);
+            writeResultMessage(response.getWriter(),resultMsg+","+e.getMessage(),ResultMessage.Fail);
         }
-        return jsonObject;
     }
 }
